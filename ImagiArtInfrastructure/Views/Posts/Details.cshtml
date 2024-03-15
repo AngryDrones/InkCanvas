@@ -1,7 +1,7 @@
 ﻿@model ImagiArtDomain.Model.Post
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Деталі";
 }
 
 <h1>Details</h1>
@@ -10,6 +10,12 @@
     <h4>Post</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Caption)
         </dt>
@@ -26,10 +32,47 @@
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Password)
+            @Html.DisplayFor(model => model.UserId)
         </dd>
     </dl>
 </div>
+
+<!-- Також відображаються коментарі до поста -->
+<h4>Коментарі</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Caption)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Caption)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

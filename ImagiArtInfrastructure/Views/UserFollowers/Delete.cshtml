@@ -11,17 +11,23 @@
     <h4>UserFollower</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FollowerId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FollowerId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Password)
         </dd>
     </dl>
     

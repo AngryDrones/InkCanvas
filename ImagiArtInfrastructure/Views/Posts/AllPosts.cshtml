@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ImagiArtDomain.Model.Like>
+﻿@model IEnumerable<ImagiArtDomain.Model.Post>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Вподобайки</h1>
+<h1>Всі пости</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -16,10 +16,13 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.UserId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post)
+                @Html.DisplayNameFor(model => model.Caption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th></th>
         </tr>
@@ -34,9 +37,14 @@
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PostId)
+                @Html.DisplayFor(modelItem => item.Caption)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

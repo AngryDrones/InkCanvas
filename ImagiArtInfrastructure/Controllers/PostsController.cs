@@ -19,7 +19,7 @@ namespace ImagiArtInfrastructure.Controllers
             _context = context;
         }
 
-        // -----> GET: Posts
+        // GET: Posts
         public async Task<IActionResult> Index(int? id, string? username)
         {
             //var cloneContext = _context.Posts.Include(p => p.User);
@@ -32,7 +32,7 @@ namespace ImagiArtInfrastructure.Controllers
             //return View(await cloneContext.ToListAsync());
             return View(await postsByUser.ToListAsync());
         }
-
+        
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,6 +43,7 @@ namespace ImagiArtInfrastructure.Controllers
 
             var post = await _context.Posts
                 .Include(p => p.User)
+                .Include(p => p.Comments) // включаємо коментарі
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
@@ -81,7 +82,6 @@ namespace ImagiArtInfrastructure.Controllers
             return View(post);
         }
 
-
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -95,7 +95,7 @@ namespace ImagiArtInfrastructure.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", post.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", post.UserId);
             return View(post);
         }
 
@@ -131,7 +131,7 @@ namespace ImagiArtInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", post.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", post.UserId);
             return View(post);
         }
 
@@ -173,5 +173,13 @@ namespace ImagiArtInfrastructure.Controllers
         {
             return _context.Posts.Any(e => e.Id == id);
         }
+
+        // Перегляд ВСІХ постів
+        public async Task<IActionResult> AllPosts()
+        {
+            var posts = await _context.Posts.ToListAsync(); // Отримати всі пости з бази даних
+            return View(posts); // Передати список постів у представлення для відображення
+        }
+
     }
 }

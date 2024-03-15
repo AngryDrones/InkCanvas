@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ImagiArtDomain.Model;
+using Microsoft.Extensions.Hosting;
 
 namespace ImagiArtInfrastructure.Controllers
 {
@@ -48,8 +49,8 @@ namespace ImagiArtInfrastructure.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Caption");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password");
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username");
             return View();
         }
 
@@ -58,16 +59,53 @@ namespace ImagiArtInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,PostId,Caption,Id")] Comment comment)
+        /*public async Task<IActionResult> Create([Bind("UserId,PostId,Caption,Id")] Comment comment)
         {
+            User user = _context.Users.FirstOrDefault(c => c.Id == comment.UserId);
+            Post post = _context.Posts.FirstOrDefault(c => c.Id == comment.PostId);
+            ModelState.Clear();
+            TryValidateModel(comment);
+
             if (ModelState.IsValid)
             {
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Caption", comment.PostId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", comment.UserId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", comment.UserId);
+            return View(comment);
+        }*/
+        public async Task<IActionResult> Create([Bind("UserId,PostId,Caption,Id")] Comment comment)
+        {
+            // Отримати об'єкти користувача та поста за їх ідентифікаторами
+            User user = await _context.Users.FirstOrDefaultAsync(c => c.Id == comment.UserId);
+            Post post = await _context.Posts.FirstOrDefaultAsync(c => c.Id == comment.PostId);
+
+            // Перевірка чи знайдено об'єкти користувача та поста
+            if (user == null || post == null)
+            {
+                return NotFound();
+            }
+
+            // Призначити об'єкти користувача та поста відповідним властивостям коментаря
+            comment.User = user;
+            comment.Post = post;
+
+            // Очистити модель стану перед перевіркою валідності
+            ModelState.Clear();
+
+            // Перевірка валідності моделі коментаря
+            if (ModelState.IsValid)
+            {
+                _context.Add(comment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Передача списку постів та користувачів у представлення для вибору
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", comment.UserId);
             return View(comment);
         }
 
@@ -84,8 +122,8 @@ namespace ImagiArtInfrastructure.Controllers
             {
                 return NotFound();
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Caption", comment.PostId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", comment.UserId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", comment.UserId);
             return View(comment);
         }
 
@@ -121,8 +159,8 @@ namespace ImagiArtInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Caption", comment.PostId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", comment.UserId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", comment.UserId);
             return View(comment);
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ImagiArtDomain.Model;
 using ImagiArtInfrastructure;
+using Microsoft.Extensions.Hosting;
 
 namespace ImagiArtInfrastructure.Controllers
 {
@@ -48,7 +49,7 @@ namespace ImagiArtInfrastructure.Controllers
         // GET: UserFollowers/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -59,13 +60,18 @@ namespace ImagiArtInfrastructure.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,FollowerId,Id")] UserFollower userFollower)
         {
+            User user = _context.Users.FirstOrDefault(c => c.Id == userFollower.UserId);
+            userFollower.User = user;
+            ModelState.Clear();
+            TryValidateModel(userFollower);
+
             if (ModelState.IsValid)
             {
                 _context.Add(userFollower);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", userFollower.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
             return View(userFollower);
         }
 
@@ -82,7 +88,7 @@ namespace ImagiArtInfrastructure.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", userFollower.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
             return View(userFollower);
         }
 
@@ -118,7 +124,7 @@ namespace ImagiArtInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Password", userFollower.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
             return View(userFollower);
         }
 
