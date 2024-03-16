@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="AllPosts">Posts</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">Posts</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Comments" asp-action="Index">Comments</a>
@@ -37,6 +37,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="UserFollowers" asp-action="Index">UserFollowers</a>
                         </li>
+                        <form action="@Url.Action("Search", "Posts")" method="get" class="d-flex justify-content-between align-items-center">
+                            <div class="form-group mb-0">
+                                <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Пошук" />
+                            </div>
+                            <button type="submit" class="btn btn-primary ml-2">-></button>
+                        </form>
                     </ul>
                 </div>
             </div>

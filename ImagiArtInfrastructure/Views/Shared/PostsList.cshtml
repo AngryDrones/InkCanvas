@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ImagiArtDomain.Model.Post>
+
+<h4>Список постів</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Caption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => post.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => post.Caption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => post.Description)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

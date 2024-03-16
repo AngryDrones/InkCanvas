@@ -7,7 +7,7 @@
 <h1>Підписки</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Додати нову підписку</a>
 </p>
 <table class="table">
     <thead>
@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.FollowerId)
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

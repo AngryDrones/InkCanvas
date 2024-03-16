@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ImagiArtDomain.Model.Post>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Ось що ми знайшли</h1>
+
+<div>
+    @foreach (var post in Model)
+    {
+        <div>
+            <hr />
+            <h4>@post.Caption</h4>
+            <p>@post.Description</p>
+            <p>@post.UserId</p>
+        </div>
+    }
+</div>

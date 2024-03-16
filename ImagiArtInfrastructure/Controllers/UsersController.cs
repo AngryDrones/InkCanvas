@@ -33,14 +33,20 @@ namespace ImagiArtInfrastructure.Controllers
             }
 
             var user = await _context.Users
+                .Include(p => p.Posts)
                 .FirstOrDefaultAsync(m => m.Id == id);
+                
+            var username = user?.Username;
+
             if (user == null)
             {
                 return NotFound();
             }
 
-            //return View(user);
-            return RedirectToAction("Index", "Posts", new { id = user.Id, username = user.Username });
+            ViewData["Username"] = user.Username; // Passing the user name to the view
+
+            return View(user);
+            //return RedirectToAction("Index", "Posts", new { id = user.Id, username = user.Username });
         }
 
         // GET: Users/Create

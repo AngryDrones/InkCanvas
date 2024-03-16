@@ -1,17 +1,21 @@
 ﻿@model IEnumerable<ImagiArtDomain.Model.Post>
 
 @{
-    ViewData["Title"] = "Пости юзера";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Пости юзера @ViewBag.Username</h1>
+<h1>Перелік (всіх) постів</h1>
 
 <p>
-    <a asp-action="Create" asp-route-id="ViewBag.UserId">Створити пост</a>
+    <a asp-action="Create">Додати пост</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.UserId)
             </th>
@@ -28,6 +32,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
@@ -37,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Інфо</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

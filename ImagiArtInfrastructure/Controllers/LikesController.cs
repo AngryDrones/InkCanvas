@@ -73,24 +73,19 @@ namespace ImagiArtInfrastructure.Controllers
         }*/
         public async Task<IActionResult> Create([Bind("UserId,PostId,Caption,Id")] Like like)
         {
-            // Отримати об'єкти користувача та поста за їх ідентифікаторами
             User user = await _context.Users.FirstOrDefaultAsync(c => c.Id == like.UserId);
             Post post = await _context.Posts.FirstOrDefaultAsync(c => c.Id == like.PostId);
 
-            // Перевірка чи знайдено об'єкти користувача та поста
             if (user == null || post == null)
             {
                 return NotFound();
             }
 
-            // Призначити об'єкти користувача та поста відповідним властивостям коментаря
             like.User = user;
             like.Post = post;
 
-            // Очистити модель стану перед перевіркою валідності
             ModelState.Clear();
 
-            // Перевірка валідності моделі коментаря
             if (ModelState.IsValid)
             {
                 _context.Add(like);
@@ -98,7 +93,6 @@ namespace ImagiArtInfrastructure.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Передача списку постів та користувачів у представлення для вибору
             ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", like.PostId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", like.UserId);
             return View(like);

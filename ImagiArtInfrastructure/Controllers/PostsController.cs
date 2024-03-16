@@ -22,15 +22,15 @@ namespace ImagiArtInfrastructure.Controllers
         // GET: Posts
         public async Task<IActionResult> Index(int? id, string? username)
         {
-            //var cloneContext = _context.Posts.Include(p => p.User);
+            var cloneContext = _context.Posts.Include(p => p.User);
 
             //if (id == null) return RedirectToAction("Users", "Index");
-            ViewBag.Id = id;
-            ViewBag.Username = username;
-            var postsByUser = _context.Posts.Where(b => b.UserId == id).Include(b => b.User);
+            //ViewBag.Id = id;
+            //ViewBag.Username = username;
+            //var postsByUser = _context.Posts.Where(b => b.UserId == id).Include(b => b.User);
 
-            //return View(await cloneContext.ToListAsync());
-            return View(await postsByUser.ToListAsync());
+            return View(await cloneContext.ToListAsync());
+            //return View(await postsByUser.ToListAsync());
         }
         
         // GET: Posts/Details/5
@@ -43,7 +43,7 @@ namespace ImagiArtInfrastructure.Controllers
 
             var post = await _context.Posts
                 .Include(p => p.User)
-                .Include(p => p.Comments) // включаємо коментарі
+                .Include(p => p.Comments) // інклудимо коментарі
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
@@ -177,9 +177,36 @@ namespace ImagiArtInfrastructure.Controllers
         // Перегляд ВСІХ постів
         public async Task<IActionResult> AllPosts()
         {
-            var posts = await _context.Posts.ToListAsync(); // Отримати всі пости з бази даних
-            return View(posts); // Передати список постів у представлення для відображення
+            var posts = await _context.Posts.ToListAsync();
+            return View(posts);
         }
 
+        // Пошук постів за назвою
+        public async Task<IActionResult> Search(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return RedirectToAction("NoResultsFound", new { message = "Спробуйте ввести кілька букв" });
+            }
+
+            var posts = await _context.Posts
+                .Where(p => p.Caption.Contains(searchString))
+                .ToListAsync();
+
+            if (posts == null || posts.Count == 0)
+            {
+                return RedirectToAction("NoResultsFound", new { message = "За Вашим запитом нічого не знайдено :(" });
+            }
+
+            return View(posts);
+        }
+
+        public IActionResult NoResultsFound(string message)
+        {
+            ViewBag.Message = message;
+            return View();
+        }
+
+        // auugh
     }
 }
