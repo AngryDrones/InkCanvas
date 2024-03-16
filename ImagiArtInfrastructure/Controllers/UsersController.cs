@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ImagiArtDomain.Model;
+using Microsoft.Extensions.Hosting;
 
 namespace ImagiArtInfrastructure.Controllers
 {
@@ -132,6 +133,7 @@ namespace ImagiArtInfrastructure.Controllers
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (user == null)
             {
                 return NotFound();
@@ -146,10 +148,27 @@ namespace ImagiArtInfrastructure.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            if (user == null)
             {
-                _context.Users.Remove(user);
+                return NotFound();
             }
+
+            // Дістаємо все, з чим пов'язаний юзер і видаляємо перед видаленням самого юзера.
+            // Сам юзер пов'язаний з УСІМА таблицями, тому видаляється багато всього
+            var relatedPosts = _context.Posts.Where(post => post.UserId == id);
+            _context.Posts.RemoveRange(relatedPosts);
+
+            var relatedComments = _context.Comments.Where(comment => comment.PostId == id);
+            _context.Comments.RemoveRange(relatedComments);
+
+            var relatedLikes = _context.Likes.Where(like => like.UserId == id);
+            _context.Likes.RemoveRange(relatedLikes);
+
+            var relatedFollowers = _context.UserFollowers.Where(like => like.UserId == id);
+            _context.UserFollowers.RemoveRange(relatedFollowers);
+
+            // Тепер видаляємо самого юзера
+            _context.Users.Remove(user);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

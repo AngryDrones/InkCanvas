@@ -160,10 +160,21 @@ namespace ImagiArtInfrastructure.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Posts.FindAsync(id);
-            if (post != null)
+            if (post == null)
             {
-                _context.Posts.Remove(post);
+                return NotFound();
             }
+
+            // Видаляємо всі коментарі, пов'язані з цим постом
+            var relatedComments = _context.Comments.Where(comment => comment.PostId == id);
+            _context.Comments.RemoveRange(relatedComments);
+
+            // Видаляємо всі лайки, пов'язані з цим постом
+            var relatedLikes = _context.Likes.Where(like => like.PostId == id);
+            _context.Likes.RemoveRange(relatedLikes);
+
+            // Видаляємо сам пост
+            _context.Posts.Remove(post);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
