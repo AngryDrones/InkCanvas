@@ -1,19 +1,44 @@
 ﻿@model IEnumerable<ImagiArtDomain.Model.Post>
 
 @{
-    ViewData["Title"] = "Search Results";
+    ViewData["Title"] = "Результати пошуку";
 }
 
-<h1>Ось, що ми знайшли</h1>
+<h3>Ось, що ми знайшли</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Caption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-<div>
-    @foreach (var post in Model)
-    {
-        <div>
-            <hr />
-            <h4>@post.Caption</h4>
-            <p>@post.Description</p>
-            <p>@post.UserId</p>
-        </div>
-    }
-</div>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Caption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">клік</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

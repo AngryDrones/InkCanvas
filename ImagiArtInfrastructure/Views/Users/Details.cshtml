@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Інформація про @ViewBag.Username</h1>
+<h3>Інформація про користувача '@ViewBag.Username'</h3>
 
 <div>
     <hr />
@@ -31,7 +31,6 @@
     </dl>
 </div>
 
-<!-- Відображення списку постів -->
 <div>
     @Html.Partial("PostsList", Model.Posts)
 </div>

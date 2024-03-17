@@ -201,7 +201,7 @@ namespace ImagiArtInfrastructure.Controllers
             }
 
             var posts = await _context.Posts
-                .Where(p => p.Caption.Contains(searchString))
+                .Where(p => p.Caption.Contains(searchString) || p.Description.Contains(searchString))
                 .ToListAsync();
 
             if (posts == null || posts.Count == 0)

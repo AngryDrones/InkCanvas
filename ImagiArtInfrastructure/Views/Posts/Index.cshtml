@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<ImagiArtDomain.Model.Post>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Пости";
 }
 
-<h1>Перелік (всіх) постів</h1>
+<h3>Перелік всіх постів</h3>
 
 <p>
-    <a asp-action="Create">Додати пост</a>
+    <a asp-action="Create">Новий пост</a>
 </p>
 
 <table class="table">
@@ -44,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Інфо</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Інфо</a>
+                <a asp-controller="Posts" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редагувати</a>
+                <a asp-controller="Posts" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Видалити</a>
             </td>
         </tr>
 }

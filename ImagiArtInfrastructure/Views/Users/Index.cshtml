@@ -4,10 +4,10 @@
     ViewData["Title"] = "Користувачі";
 }
 
-<h1>Користувачі</h1>
+<h3>Користувачі</h3>
 
 <p>
-    <a asp-action="Create">Додати користувача</a>
+    <a asp-action="Create">Новий користувач</a>
 </p>
 <table class="table">
     <thead>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Інфо</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                <a asp-controller="Users" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Інфо</a>
+                <a asp-controller="Users" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редагувати</a>
+                <a asp-controller="Users" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Видалити</a>
             </td>
         </tr>
 }
