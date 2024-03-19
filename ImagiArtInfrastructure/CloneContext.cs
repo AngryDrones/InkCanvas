@@ -28,7 +28,7 @@ public partial class CloneContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-6SAKF27\\SQLEXPRESS; Database=Clone; Trusted_Connection=True; TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-6SAKF27\\SQLEXPRESS; Database=Clone; Trusted_Connection=True; TrustServerCertificate=True; ");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -113,7 +113,12 @@ public partial class CloneContext : DbContext
             entity.Property(e => e.FollowerId).HasColumnName("follower_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserFollowers)
+            entity.HasOne(d => d.Follower).WithMany(p => p.UserFollowerFollowers)
+                .HasForeignKey(d => d.FollowerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserFollowers_Users");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserFollowerUsers)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("userfollowers_user_id_foreign");

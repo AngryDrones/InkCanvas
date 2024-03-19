@@ -36,7 +36,7 @@ namespace ImagiArtInfrastructure.Controllers
             var user = await _context.Users
                 .Include(p => p.Posts)
                 .FirstOrDefaultAsync(m => m.Id == id);
-                
+
             var username = user?.Username;
 
             if (user == null)

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ImagiArtDomain.Model;
 using ImagiArtInfrastructure;
-using Microsoft.Extensions.Hosting;
 
 namespace ImagiArtInfrastructure.Controllers
 {
@@ -23,7 +22,7 @@ namespace ImagiArtInfrastructure.Controllers
         // GET: UserFollowers
         public async Task<IActionResult> Index()
         {
-            var cloneContext = _context.UserFollowers.Include(u => u.User);
+            var cloneContext = _context.UserFollowers.Include(u => u.Follower).Include(u => u.User);
             return View(await cloneContext.ToListAsync());
         }
 
@@ -36,6 +35,7 @@ namespace ImagiArtInfrastructure.Controllers
             }
 
             var userFollower = await _context.UserFollowers
+                .Include(u => u.Follower)
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userFollower == null)
@@ -49,21 +49,28 @@ namespace ImagiArtInfrastructure.Controllers
         // GET: UserFollowers/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["FollowerId"] = new SelectList(_context.Users, "Id", "Username");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username");
             return View();
         }
 
         // POST: UserFollowers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FollowerId,Id")] UserFollower userFollower)
+        public async Task<IActionResult> CreateUserFollower([Bind("UserId,FollowerId,Id")] UserFollower userFollower)
         {
-            User user = _context.Users.FirstOrDefault(c => c.Id == userFollower.UserId);
+            User user = await _context.Users.FirstOrDefaultAsync(c => c.Id == userFollower.UserId);
+            User follower = await _context.Users.FirstOrDefaultAsync(c => c.Id == userFollower.FollowerId);
+
+            if (user == null || follower == null)
+            {
+                return NotFound();
+            }
+
             userFollower.User = user;
+            userFollower.Follower = follower;
+
             ModelState.Clear();
-            TryValidateModel(userFollower);
 
             if (ModelState.IsValid)
             {
@@ -71,9 +78,12 @@ namespace ImagiArtInfrastructure.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
+
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", userFollower.UserId);
+            ViewData["FollowerId"] = new SelectList(_context.Users, "Id", "Username", userFollower.FollowerId);
             return View(userFollower);
         }
+
 
         // GET: UserFollowers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -88,8 +98,8 @@ namespace ImagiArtInfrastructure.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
-            return View(userFollower);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", userFollower.UserId);
+            ViewData["FollowerId"] = new SelectList(_context.Users, "Id", "Username", userFollower.FollowerId); return View(userFollower);
         }
 
         // POST: UserFollowers/Edit/5
@@ -124,7 +134,8 @@ namespace ImagiArtInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userFollower.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Username", userFollower.UserId);
+            ViewData["FollowerId"] = new SelectList(_context.Users, "Id", "Username", userFollower.FollowerId);
             return View(userFollower);
         }
 
@@ -137,6 +148,7 @@ namespace ImagiArtInfrastructure.Controllers
             }
 
             var userFollower = await _context.UserFollowers
+                .Include(u => u.Follower)
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userFollower == null)

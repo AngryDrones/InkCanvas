@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<ImagiArtDomain.Model.UserFollower>
 
 @{
-    ViewData["Title"] = "Підписки";
+    ViewData["Title"] = "Index";
 }
 
-<h3>Підписки</h3>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Нова підписка</a>
+    <a asp-action="CreateUserFollower">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FollowerId)
+                @Html.DisplayNameFor(model => model.Follower)
             </th>
             <th></th>
         </tr>
@@ -31,8 +31,9 @@
                 @Html.DisplayFor(modelItem => item.FollowerId)
             </td>
             <td>
-            <td>
-                <a asp-controller="UserFollowers" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Видалити</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

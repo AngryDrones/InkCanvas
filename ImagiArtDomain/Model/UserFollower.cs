@@ -13,4 +13,5 @@ public partial class UserFollower : Entity
     public int FollowerId { get; set; }
 
     public virtual User User { get; set; } = null!;
+    public virtual User Follower { get; set; } = null!;
 }

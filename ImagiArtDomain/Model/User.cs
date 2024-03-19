@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ImagiArtDomain.Model;
 
@@ -19,5 +17,7 @@ public partial class User : Entity
 
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 
-    public virtual ICollection<UserFollower> UserFollowers { get; set; } = new List<UserFollower>();
+    public virtual ICollection<UserFollower> UserFollowerFollowers { get; set; } = new List<UserFollower>();
+
+    public virtual ICollection<UserFollower> UserFollowerUsers { get; set; } = new List<UserFollower>();
 }
