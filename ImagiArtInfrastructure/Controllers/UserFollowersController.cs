@@ -57,7 +57,8 @@ namespace ImagiArtInfrastructure.Controllers
         // POST: UserFollowers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        public async Task<IActionResult> CreateUserFollower([Bind("UserId,FollowerId,Id")] UserFollower userFollower)
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("UserId,FollowerId,Id")] UserFollower userFollower)
         {
             User user = await _context.Users.FirstOrDefaultAsync(c => c.Id == userFollower.UserId);
             User follower = await _context.Users.FirstOrDefaultAsync(c => c.Id == userFollower.FollowerId);
