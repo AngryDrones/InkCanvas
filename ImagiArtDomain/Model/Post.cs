@@ -15,6 +15,7 @@ public partial class Post : Entity
 
     [Display(Name = "Опис")]
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

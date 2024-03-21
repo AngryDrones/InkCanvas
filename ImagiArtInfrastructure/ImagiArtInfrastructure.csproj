@@ -26,4 +26,8 @@
     <ProjectReference Include="..\ImagiArtDomain\ImagiArtDomain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+
 </Project>

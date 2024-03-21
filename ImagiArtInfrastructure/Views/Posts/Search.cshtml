@@ -5,40 +5,16 @@
 }
 
 <h3>Ось, що ми знайшли</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Caption)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-
-    <tbody>
+<div class="container">
+    <div class="list-group">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Caption)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">клік</a>
-                </td>
-            </tr>
+            <a href="@Url.Action("Details", "Posts", new { id = item.Id })" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@item.Caption</h5>
+                </div>
+                <p class="mb-1">@item.Description</p>
+            </a>
         }
-    </tbody>
-</table>
-
+    </div>
+</div>

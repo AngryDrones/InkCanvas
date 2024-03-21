@@ -20,7 +20,7 @@ namespace ImagiArtInfrastructure.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index(int? id, string? username)
+        public async Task<IActionResult> Index(/*int? id, string? username*/)
         {
             var cloneContext = _context.Posts.Include(p => p.User);
 

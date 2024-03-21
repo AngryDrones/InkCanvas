@@ -37,8 +37,7 @@ public partial class CloneContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Comments__E7957687FE981422");
 
             entity.Property(e => e.Caption)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasMaxLength(64)
                 .HasColumnName("caption");
             entity.Property(e => e.PostId).HasColumnName("post_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
@@ -77,13 +76,15 @@ public partial class CloneContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Posts__3ED78766917B0BC9");
 
             entity.Property(e => e.Caption)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasMaxLength(32)
                 .HasColumnName("caption");
             entity.Property(e => e.Description)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasMaxLength(64)
                 .HasColumnName("description");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("image_url");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Posts)
@@ -97,11 +98,11 @@ public partial class CloneContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Users__B9BE370F05DDB2CA");
 
             entity.Property(e => e.Password)
-                .HasMaxLength(255)
+                .HasMaxLength(16)
                 .IsUnicode(false)
                 .HasColumnName("password");
             entity.Property(e => e.Username)
-                .HasMaxLength(255)
+                .HasMaxLength(16)
                 .IsUnicode(false)
                 .HasColumnName("username");
         });
