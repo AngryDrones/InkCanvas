@@ -4,8 +4,8 @@ namespace InkCanvas.ViewModel
 {
     public class RegisterViewModel
     {
-        //[Required]
-        //public string Username { get; set; }
+        [Required]
+        public string Username { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

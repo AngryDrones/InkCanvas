@@ -25,8 +25,8 @@ namespace WEBAPPTEST.Controllers
             {
                 User user = new User
                 {
+                    UserName = model.Username,
                     Email = model.Email,
-                    UserName = model.Email,
                     Age = model.Age
                 };
                 // Adding the user
