@@ -1,25 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.ComponentModel.DataAnnotations;
-
-//namespace _1.Models;
-
-//public partial class Post
-//{
-//    //[Key]
-//    public int PostId { get; set; }
-
-//    public string UserId { get; set; } = null!;
-
-//    public string Caption { get; set; } = null!;
-
-//    public virtual User User { get; set; } = null!;
-//}
-
-using System;
-using System.Collections.Generic;
-
-namespace InkCanvas.Models;
+﻿namespace InkCanvas.Models;
 
 public partial class Post
 {

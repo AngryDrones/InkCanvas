@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en"> @* data-bs-theme="dark"> *@
+<html lang="en">
+@* data-bs-theme="dark"> *@
 
 <style>
     .list-group-item-action:hover {
@@ -21,58 +22,40 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">_1</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">Posts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Comments" asp-action="Index">Comments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="Index">Likes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Follows" asp-action="Index">Follows</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                        </li>
-                    </ul>
-                    <div class="ml-auto d-flex align-items-center">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <p class="m-0">@User.Identity.Name</p>
-                            <form class="m-0" method="post" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="btn btn-outline-secondary">Вихід</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
-                                <button type="submit" class="btn btn-outline-secondary">Вхід</button>
-                            </form>
-                            <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
-                                <button type="submit" class="btn btn-outline-secondary">Реєстація</button>
-                            </form>
-                        }
-                    </div>
+
+                <!-- Search Bar -->
+                <form action="@Url.Action("SearchPost", "Posts")" class="d-flex">
+                    <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
+                </form>
+
+                <!-- Right-aligned items -->
+                <div class="ml-auto d-flex align-items-center">
+                    <!-- User authentication buttons -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p class="m-0">@User.Identity.Name</p>
+                        <form class="m-0" method="post" asp-controller="Account" asp-action="Logout">
+                            <button type="submit" class="btn btn-outline-secondary">Вихід</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
+                            <button type="submit" class="btn btn-outline-secondary">Вхід</button>
+                        </form>
+                        <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
+                            <button type="submit" class="btn btn-outline-secondary">Реєстація</button>
+                        </form>
+                    }
                 </div>
             </div>
+
         </nav>
     </header>
     <div class="container">

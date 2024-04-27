@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InkCanvas.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CommentsController : Controller
     {
         private readonly CloneIdentityContext _context;

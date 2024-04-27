@@ -8,7 +8,7 @@ namespace LibraryWebApplication
         roleManager)
         {
             string adminEmail = "admin@gmail.com";
-            string password = "Admin1";
+            string password = "1111";
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));

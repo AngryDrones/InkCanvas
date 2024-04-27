@@ -16,12 +16,14 @@ builder.Configuration.GetConnectionString("DefaultConnection")
 // here
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CloneIdentityContext>();
 
+// Password settings
 builder.Services.Configure<IdentityOptions>(options =>
 {
     //// Default Password settings.
     //options.Password.RequireDigit = true;
     options.Password.RequireDigit = false;
     //options.Password.RequireLowercase = true;
+    options.Password.RequireLowercase = false;
     //options.Password.RequireNonAlphanumeric = true;
     options.Password.RequireNonAlphanumeric = false;
     //options.Password.RequireUppercase = true;
@@ -61,7 +63,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseAuthentication(); //підключення автентифікації
+app.UseAuthentication();
 
 app.UseRouting();
 

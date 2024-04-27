@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles="admin, user")]
+    [Authorize(Roles="admin")]
     public class FollowsController : Controller
     {
         private readonly CloneIdentityContext _context;

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InkCanvas.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PostsController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -65,6 +67,15 @@ namespace InkCanvas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
+            //// Retrieve usernames and IDs from the database
+            //var users = _context.Users.Select(u => new { Id = u.Id, UserName = u.UserName }).ToList();
+
+            //// Create a SelectList using usernames as the display text and IDs as the values
+            //var userSelectList = new SelectList(users, "UserName", "UserName");
+
+            //// Pass the SelectList to the view
+            //ViewBag.UserName = userSelectList;
+
             return View(post);
         }
 
@@ -146,10 +157,20 @@ namespace InkCanvas.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Posts.FindAsync(id);
-            if (post != null)
+            if (post == null)
             {
-                _context.Posts.Remove(post);
+                return NotFound();
             }
+
+            // Remove comments and likes.
+            var relatedComments = _context.Comments.Where(comment => comment.PostId == id);
+            _context.Comments.RemoveRange(relatedComments);
+
+            var relatedLikes = _context.Likes.Where(like => like.PostId == id);
+            _context.Likes.RemoveRange(relatedLikes);
+
+            // Remove post.
+            _context.Posts.Remove(post);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -158,6 +179,39 @@ namespace InkCanvas.Controllers
         private bool PostExists(int id)
         {
             return _context.Posts.Any(e => e.PostId == id);
+        }
+
+        // ALL posts view.
+        public async Task<IActionResult> AllPosts()
+        {
+            var posts = await _context.Posts.ToListAsync();
+            return View(posts);
+        }
+
+        // Search post by caption (no description for now).
+        public async Task<IActionResult> SearchPost(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return RedirectToAction("NoResultsFound", new { message = "Спробуйте ввести кілька букв" });
+            }
+
+            var posts = await _context.Posts
+                .Where(p => p.Caption.Contains(searchString)/* || p.Description.Contains(searchString)*/)
+                .ToListAsync();
+
+            if (posts == null || posts.Count == 0)
+            {
+                return RedirectToAction("NoResultsFound", new { message = "За Вашим запитом нічого не знайдено :(" });
+            }
+
+            return View("./Views/PostSearch/SearchPost.cshtml", posts);
+        }
+
+        public IActionResult NoResultsFound(string message)
+        {
+            ViewBag.Message = message;
+            return View("./Views/PostSearch/NoResultsFound.cshtml");
         }
     }
 }

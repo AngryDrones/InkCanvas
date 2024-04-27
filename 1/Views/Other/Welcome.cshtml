@@ -2,7 +2,8 @@
 
 <h2>Welcome to InkCanvas!</h2>
 
-<form method="post" asp-controller="Account" asp-action="Register">
+<!-- Registration Form -->
+<form id="registrationForm" method="post" asp-controller="Account" asp-action="Register">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="Username"></label><br />
@@ -30,10 +31,11 @@
         <span asp-validation-for="PasswordConfirm"></span>
     </div>
     <div>
-        <input type="submit" value="Реєстрація" />
+        <input type="submit" value="Register" />
     </div>
 </form>
 
+<!-- Switch to Login Button -->
 <button id="switchToLogin">Already have an account? Login</button>
 
 <script>

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace InkCanvas.Models;
-
-//[Table("AspNetUsers")]
 public partial class User : IdentityUser
 {
     public int Age { get; set; }

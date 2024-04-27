@@ -102,6 +102,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGlrZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/Clone/1/Views/Other/Welcome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3RoZXJcV2VsY29tZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Clone/1/Views/PostSearch/NoResultsFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFNlYXJjaFxOb1Jlc3VsdHNGb3VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Clone/1/Views/PostSearch/SearchPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFNlYXJjaFxTZWFyY2hQb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/Clone/1/Views/Posts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
