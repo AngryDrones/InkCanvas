@@ -1,13 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-@* data-bs-theme="dark"> *@
+﻿@using System.Security.Claims;
 
-<style>
-    .list-group-item-action:hover {
-        background-color: #1111;
-        color: #111111;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -18,57 +12,85 @@
     @*<link rel="stylesheet" href="~/_1.styles.css" asp-append-version="true" /> *@
 </head>
 
+<style>
+    #left, #right {
+        width: 100px;
+        float: left;
+    }
+</style>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
-                {
-                    <form action="@Url.Action("SearchPost", "Posts")" class="d-flex">
-                        <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
-                    </form>
-                }
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IC</a>
 
-                <div class="ml-auto d-flex align-items-center">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <p class="m-0">@User.Identity.Name</p>
-                        <form class="m-0" method="post" asp-controller="Account" asp-action="Logout">
-                            <button type="submit" class="btn btn-outline-secondary">Вихід</button>
-                        </form>
-                    }
-                    else
-                    {
+                <div class="collapse navbar-collapse" id="navbarColor02">
+
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown" style="width: 120px">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Акаунт</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="@Url.Action("Profile", "Account")">Профіль</a>
+                                <a class="dropdown-item" href="#">Статистика</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="ms-auto d-flex align-items-center">
                         @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
                         {
-                            <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
-                                <button type="submit" class="btn btn-outline-secondary">Вхід</button>
-                            </form>
-                            <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
-                                <button type="submit" class="btn btn-outline-secondary">Реєстація</button>
+                            <form action="@Url.Action("SearchPost", "Posts")" class="d-flex me-2">
+                                <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
+                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
                             </form>
                         }
-                    }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <p class="m-0">@User.FindFirstValue("Login")</p>
+                            <form class="m-0" method="post" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn btn-secondary">Вихід</button>
+                            </form>
+                        }
+                        else
+                        {
+                            @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
+                            {
+                                <div>
+                                    <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
+                                        <button type="submit" class="btn btn-secondary">Вхід</button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
+                                        <button type="submit" class="btn btn-secondary">Реєстація</button>
+                                    </form>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
-
         </nav>
     </header>
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

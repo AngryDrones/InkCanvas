@@ -51,14 +51,8 @@
         </div>
         <div class="button-container">
             <input type="submit" value="Увійти" class="btn btn-primary" />
-            <button id="switchToRegister" class="btn btn-secondary">Не маєте облікового запису? Зареєструватися</button>
+            <button type="button" onclick="window.location.href='Register'" class="btn btn-secondary">Вперше з нами? Зареєструватися</button>
         </div>
     </form>
-
-    <script>
-        document.getElementById('switchToRegister').addEventListener('click', function () {
-            window.location.href = '/Account/Register';
-        });
-    </script>
 </body>
 </html>

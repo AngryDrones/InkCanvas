@@ -49,15 +49,9 @@
         </div>
         <div>
             <input type="submit" value="Реєстрація" class="btn btn-primary" />
-            <button id="switchToLogin" class="btn btn-secondary">Не вперше тут? Увійти</button>
+            <button type="button" onclick="window.location.href='Login'" class="btn btn-secondary">Не вперше тут? Увійти</button>
         </div>
     </form>
-
-    <script>
-        document.getElementById('switchToLogin').addEventListener('click', function () {
-            window.location.href = '~/Views/Account/Login';
-        });
-    </script>
 
 </body>
 </html>

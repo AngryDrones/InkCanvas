@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using InkCanvas.ViewModel;
 using InkCanvas.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 namespace WEBAPPTEST.Controllers
 {
     public class AccountController : Controller
@@ -35,12 +36,12 @@ namespace WEBAPPTEST.Controllers
                     Email = model.Email,
                     Age = model.Age
                 };
-                // Adding the user
+                // Adding the user.
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "user");
-                    // Cookies
+                    // Cookies.
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -77,7 +78,6 @@ namespace WEBAPPTEST.Controllers
                 false);
                 if (result.Succeeded)
                 {
-                    // перевіряємо, чи належить URL додатку
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -99,9 +99,30 @@ namespace WEBAPPTEST.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // видаляємо автентифікаційні куки
+            // Delete cookies.
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            // Find user with claims.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                // If the user is not authenticated.
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
     }
 }

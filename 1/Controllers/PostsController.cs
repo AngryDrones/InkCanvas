@@ -183,7 +183,7 @@ namespace InkCanvas.Controllers
             return View(posts);
         }
 
-        // Search post by caption (no description for now).
+        // Search post by caption.
         public async Task<IActionResult> SearchPost(string searchString)
         {
             if (string.IsNullOrEmpty(searchString))
@@ -192,7 +192,7 @@ namespace InkCanvas.Controllers
             }
 
             var posts = await _context.Posts
-                .Where(p => p.Caption.Contains(searchString)/* || p.Description.Contains(searchString)*/)
+                .Where(p => p.Caption.Contains(searchString) || p.Description.Contains(searchString))
                 .ToListAsync();
 
             if (posts == null || posts.Count == 0)
