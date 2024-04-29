@@ -1,30 +1,32 @@
-﻿@model InkCanvas.Models.Post
+﻿@model InkCanvas.Models.Post;
+@inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"{Model.Caption}";
 }
 
-<h1>Details</h1>
+<h2>@Html.DisplayFor(model => model.Caption)</h2>
+<h4>@Html.DisplayFor(model => model.Description)</h4>
+
+<dd class="col-sm-10">
+    @{
+        var user = await UserManager.FindByIdAsync(Model.UserId);
+        if (user != null)
+        {
+            <span>@user.UserName</span>
+        }
+        else
+        {
+            <span>User not found</span>
+        }
+    } 
+</dd>
 
 <div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Caption)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Caption)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.UserName)
-        </dd>
-    </dl>
+    @Html.Partial("CommentsList", Model.Comments)
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.PostId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @* <a asp-action="Edit" asp-route-id="@Model?.PostId">Редагувати</a> | *@
+    <a asp-action="Index">Назад</a>
 </div>

@@ -21,15 +21,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     //// Default Password settings.
     //options.Password.RequireDigit = true;
-    options.Password.RequireDigit = false;
     //options.Password.RequireLowercase = true;
-    options.Password.RequireLowercase = false;
     //options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireNonAlphanumeric = false;
     //options.Password.RequireUppercase = true;
-    options.Password.RequireUppercase = false;
     //options.Password.RequiredLength = 6;
-    options.Password.RequiredLength = 4;
     //options.Password.RequiredUniqueChars = 1;
 });
 

@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Hosting;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class CommentsController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -64,6 +64,8 @@ namespace InkCanvas.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime date = DateTime.Now;
+                comment.Date = date;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - _1</title>
+    <title>@ViewData["Title"] - InkCanvas</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap_flatly.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @*<link rel="stylesheet" href="~/_1.styles.css" asp-append-version="true" /> *@
@@ -28,15 +28,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Search Bar -->
-                <form action="@Url.Action("SearchPost", "Posts")" class="d-flex">
-                    <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
-                </form>
+                @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
+                {
+                    <form action="@Url.Action("SearchPost", "Posts")" class="d-flex">
+                        <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
+                    </form>
+                }
 
-                <!-- Right-aligned items -->
                 <div class="ml-auto d-flex align-items-center">
-                    <!-- User authentication buttons -->
                     @if (User.Identity.IsAuthenticated)
                     {
                         <p class="m-0">@User.Identity.Name</p>
@@ -46,12 +46,15 @@
                     }
                     else
                     {
-                        <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
-                            <button type="submit" class="btn btn-outline-secondary">Вхід</button>
-                        </form>
-                        <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
-                            <button type="submit" class="btn btn-outline-secondary">Реєстація</button>
-                        </form>
+                        @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
+                        {
+                            <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
+                                <button type="submit" class="btn btn-outline-secondary">Вхід</button>
+                            </form>
+                            <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
+                                <button type="submit" class="btn btn-outline-secondary">Реєстація</button>
+                            </form>
+                        }
                     }
                 </div>
             </div>

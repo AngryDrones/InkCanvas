@@ -1,0 +1,20 @@
+﻿@model IEnumerable<InkCanvas.Models.Comment>
+@inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
+
+<h4>Коментарі</h4>
+<hr />
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var user = await UserManager.FindByIdAsync(item.UserId);
+            <tr>
+                <td><h4 class="login">@user.Login</h4></td>
+            </tr>
+            <tr>
+                <td><h5 class="caption">@item.Caption</h5></td>
+                <td><h4 class="date">@item.Date</h4></td>
+            </tr>
+        }
+    </tbody>
+</table>

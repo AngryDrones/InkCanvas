@@ -2,16 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using InkCanvas.ViewModel;
 using InkCanvas.Models;
+using Microsoft.EntityFrameworkCore;
 namespace WEBAPPTEST.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly CloneIdentityContext _context;
+        public AccountController(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            CloneIdentityContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
         [HttpGet]
         public IActionResult Register()
@@ -25,7 +30,8 @@ namespace WEBAPPTEST.Controllers
             {
                 User user = new User
                 {
-                    UserName = model.Username,
+                    Login = model.Login,
+                    UserName = model.Email,
                     Email = model.Email,
                     Age = model.Age
                 };
@@ -33,6 +39,7 @@ namespace WEBAPPTEST.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "user");
                     // Cookies
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
@@ -95,11 +102,6 @@ namespace WEBAPPTEST.Controllers
             // видаляємо автентифікаційні куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-        [HttpGet]
-        public IActionResult Welcome()
-        {
-            return View();
         }
     }
 }

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Lists\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
 

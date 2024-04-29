@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class PostsController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -37,6 +37,7 @@ namespace InkCanvas.Controllers
 
             var post = await _context.Posts
                 .Include(p => p.User)
+                .Include(p => p.Comments) // Include comments.
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {
@@ -58,23 +59,17 @@ namespace InkCanvas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,UserId,Caption")] Post post)
+        public async Task<IActionResult> Create([Bind("PostId,UserId,Caption,Description")] Post post)
         {
             if (ModelState.IsValid)
             {
+                DateTime date = DateTime.Now;
+                post.Date = date;
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
-            //// Retrieve usernames and IDs from the database
-            //var users = _context.Users.Select(u => new { Id = u.Id, UserName = u.UserName }).ToList();
-
-            //// Create a SelectList using usernames as the display text and IDs as the values
-            //var userSelectList = new SelectList(users, "UserName", "UserName");
-
-            //// Pass the SelectList to the view
-            //ViewBag.UserName = userSelectList;
 
             return View(post);
         }
@@ -101,7 +96,7 @@ namespace InkCanvas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,UserId,Caption")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,UserId,Caption,Description")] Post post)
         {
             if (id != post.PostId)
             {

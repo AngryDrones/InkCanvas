@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class LikesController : Controller
     {
         private readonly CloneIdentityContext _context;

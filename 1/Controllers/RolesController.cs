@@ -1,9 +1,12 @@
-﻿using InkCanvas.ViewModel;
+﻿    using InkCanvas.ViewModel;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 namespace LibraryWebApplication.Controllers
 {
+    [Authorize(Roles="admin")]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;

@@ -13,6 +13,8 @@ public partial class Comment
 
     public string Caption { get; set; }
 
+    public DateTime Date { get; set; }
+
     public virtual Post Post { get; set; }
 
     public virtual User User { get; set; }
