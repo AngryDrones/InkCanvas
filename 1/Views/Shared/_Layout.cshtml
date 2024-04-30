@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +42,18 @@
                             </div>
                         </li>
                     </ul>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item dropdown" style="width: 120px">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Керування</a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Імпорт/експорт користувачів</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Roles")">Ролі</a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
 
                     <div class="ms-auto d-flex align-items-center">
                         @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))

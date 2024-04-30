@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
 using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
+using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
+    [Authorize(Roles="user,admin")]
     public class PostsController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -59,17 +61,22 @@ namespace InkCanvas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,UserId,Caption,Description")] Post post)
+        public async Task<IActionResult> Create([Bind("PostId,Caption,Description")] Post post)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                post.UserId = userId;
+
                 DateTime date = DateTime.Now;
                 post.Date = date;
+
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
 
             return View(post);
         }
