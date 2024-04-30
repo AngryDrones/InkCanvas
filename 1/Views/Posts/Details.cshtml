@@ -13,7 +13,7 @@
         var user = await UserManager.FindByIdAsync(Model.UserId);
         if (user != null)
         {
-            <span>@user.UserName</span>
+            <span>@user.Login</span>
         }
         else
         {

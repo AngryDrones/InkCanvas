@@ -1,7 +1,32 @@
 ﻿@model User
+@inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
-<h2>Профіль</h2>
+<h2>Профіль @Model.Login</h2>
 
-<p><strong>Email:</strong> @Model.Email</p>
-<p><strong>Username:</strong> @Model.Login</p>
-<p><strong>Age:</strong> @Model.Age</p>
+@Model.Email</p>
+<p><strong>Вік:</strong> @Model.Age</p>
+
+<h3>Posts:</h3>
+@if (Model.Posts.Any())
+{
+    <div class="container">
+        <div class="list-group">
+            @foreach (var item in Model.Posts)
+            {
+                var user = await UserManager.FindByIdAsync(item.UserId);
+                <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@item.Caption</h5>
+                        <h4 class="mb-1">@user.UserName</h4>
+                        <h4 class="mb-1">@item.Date</h4>
+                    </div>
+                    <p class="mb-1">@item.Description</p>
+                </a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Поки що тут пусто.</p>
+}

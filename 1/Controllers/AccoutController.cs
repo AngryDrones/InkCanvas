@@ -121,7 +121,12 @@ namespace WEBAPPTEST.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            // Include the user's posts when retrieving the user data
+            var userWithPosts = await _context.Users
+                .Include(u => u.Posts)
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            return View(userWithPosts);
         }
 
     }

@@ -3,7 +3,7 @@ using InkCanvas.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace _1.Controllers
+namespace InkCanvas.Controllers
 {
     public class ChartController : Controller
     {
@@ -40,9 +40,12 @@ namespace _1.Controllers
                 .Select(p => _context.Likes.Count(l => l.PostId == p.PostId))
                 .ToList();
 
+            // Modifying the like distribution data to include post names and IDs.
+            var likeChartData = mostLikedPosts.Select((post, index) => new object[] { $"{post.Caption} (PostId: {post.PostId})", likeDistribution[index] }).ToList();
+            likeChartData.Insert(0, new object[] { "Пост", "Кількість вподобань" });
 
             ViewBag.UserChartData = userChartData;
-            ViewBag.LikeDistribution = likeDistribution;
+            ViewBag.LikeChartData = likeChartData;
 
             return View();
         }
