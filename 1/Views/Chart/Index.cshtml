@@ -1,0 +1,40 @@
+﻿<div class="container">
+    <div id="chart1"></div> <!-- Age distribution chart -->
+    <div id="chart2"></div> <!-- Like distribution chart -->
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            var userData = @Html.Raw(Json.Serialize(ViewBag.UserChartData));
+            var userDataTable = google.visualization.arrayToDataTable(userData);
+            var userOptions = {
+                title: 'Розподіл користувачів за віком',
+                pieHole: 0.2,
+            };
+            var userChart = new google.visualization.PieChart(document.getElementById('chart1'));
+            userChart.draw(userDataTable, userOptions);
+
+            var likeData = [['Post', 'Likes']];
+            var likeDistribution = @Html.Raw(Json.Serialize(ViewBag.LikeDistribution));
+            for (var i = 0; i < likeDistribution.length; i++) {
+                likeData.push(['Post ' + (i + 1), likeDistribution[i]]);
+            }
+            var likeDataTable = google.visualization.arrayToDataTable(likeData);
+            var likeOptions = {
+                title: 'Розподіл вподобайок між 10 найбільш залайканими постами',
+                legend: { position: 'none' }
+                // vAxis: {
+                //     format: '0' // Display whole numbers only.
+                // }
+                // Charts are not rendered for some reason if this is on.
+            };
+            var likeChart = new google.visualization.ColumnChart(document.getElementById('chart2'));
+            likeChart.draw(likeDataTable, likeOptions);
+        }
+    </script>
+}
