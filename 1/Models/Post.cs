@@ -1,4 +1,6 @@
-﻿namespace InkCanvas.Models;
+﻿using System.ComponentModel;
+
+namespace InkCanvas.Models;
 
 public partial class Post
 {
@@ -6,8 +8,10 @@ public partial class Post
 
     public string UserId { get; set; }
 
+    [DisplayName("Заголовок")]
     public string Caption { get; set; }
 
+    [DisplayName("Опис")]
     public string Description { get; set; }
 
     public string ImageUrl { get; set; }

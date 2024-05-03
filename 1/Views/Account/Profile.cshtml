@@ -5,8 +5,11 @@
 
 @Model.Email</p>
 <p><strong>Вік:</strong> @Model.Age</p>
+<a href="@Url.Action("Create", "Posts")" class="btn btn-primary">Новий пост</a>
 
-<h3>Posts:</h3>
+
+<hr>
+
 @if (Model.Posts.Any())
 {
     <div class="container">
@@ -17,7 +20,7 @@
                 <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">@item.Caption</h5>
-                        <h4 class="mb-1">@user.UserName</h4>
+                        <h4 class="mb-1">@user.Login</h4>
                         <h4 class="mb-1">@item.Date</h4>
                     </div>
                     <p class="mb-1">@item.Description</p>
@@ -28,5 +31,5 @@
 }
 else
 {
-    <p>Поки що тут пусто.</p>
+    <h5>Поки що тут пусто.</h5>
 }

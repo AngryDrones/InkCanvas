@@ -17,7 +17,11 @@
                 pieHole: 0.2,
             };
             var userChart = new google.visualization.PieChart(document.getElementById('chart1'));
-            userChart.draw(userDataTable, userOptions);
+            if (userData.length > 1) {
+                userChart.draw(userDataTable, userOptions);
+            } else {
+                document.getElementById('chart1').innerHTML = "<p>Немає інформації для статистики віку користувачів.</p>";
+            }
 
             var likeData = @Html.Raw(Json.Serialize(ViewBag.LikeChartData));
             var likeDataTable = google.visualization.arrayToDataTable(likeData);
@@ -26,7 +30,15 @@
                 legend: { position: 'none' }
             };
             var likeChart = new google.visualization.ColumnChart(document.getElementById('chart2'));
-            likeChart.draw(likeDataTable, likeOptions);
+            if (likeData.length > 1) {
+                likeChart.draw(likeDataTable, likeOptions);
+            } else {
+                document.getElementById('chart2').innerHTML = "<p>Немає інформації для статистики вподобайок.</p>";
+            }
         }
     </script>
 }
+
+<form action="javascript:history.back()" class="m-0">
+    <button type="submit" class="btn btn-secondary">Назад</button>
+</form>
