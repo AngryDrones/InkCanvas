@@ -7,17 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class LikesController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly CloneIdentityContext _context;
 
-        public LikesController(CloneIdentityContext context)
+        public LikesController(UserManager<User> userManager, CloneIdentityContext context)
         {
+            _userManager = userManager;
             _context = context;
+        }
+
+        // Action to display the likes of a specific user
+        public async Task<IActionResult> UserLikes(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                // If the user is not found, return a not found result
+                return NotFound();
+            }
+
+            // Get the likes of the specified user
+            var userLikes = await _context.Likes
+                .Include(l => l.Post) // Include the related post
+                .Where(l => l.UserId == userId)
+                .ToListAsync();
+
+            return View(userLikes);
         }
 
         // GET: Likes

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class CommentsController : Controller
     {
         private readonly CloneIdentityContext _context;

@@ -2,9 +2,11 @@
 using InkCanvas.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InkCanvas.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ChartController : Controller
     {
         private readonly CloneIdentityContext _context;

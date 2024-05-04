@@ -7,17 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class FollowsController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly CloneIdentityContext _context;
 
-        public FollowsController(CloneIdentityContext context)
+        public FollowsController(UserManager<User> userManager, CloneIdentityContext context)
         {
+            _userManager = userManager;
             _context = context;
+        }
+
+        // Action to display the followers of a specific user
+        public async Task<IActionResult> UserFollowers(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                // If the user is not found, return a not found result
+                return NotFound();
+            }
+
+            // Get the followers of the specified user
+            var userFollowers = await _context.Follows
+                .Where(f => f.UserId == userId)
+                .Select(f => f.Follower)
+                .ToListAsync();
+
+            return View(userFollowers);
         }
 
         // GET: Follows

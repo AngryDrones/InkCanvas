@@ -1,14 +1,49 @@
 ﻿@model User
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
-<h2>Профіль @Model.Login</h2>
+<style>
+    .Buttons {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .Likes {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .Subs {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+</style>
+
+<h3>Профіль @Model.Login</h3>
 
 @Model.Email</p>
 <p><strong>Вік:</strong> @Model.Age</p>
-<a href="@Url.Action("Create", "Posts")" class="btn btn-primary">Новий пост</a>
+<div class="Buttons">
+    <div class="row mb-2">
+        <div class="col">
+            <a href="@Url.Action("Create", "Posts")" class="btn btn-primary btn-block">Новий пост</a>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-md-6 mb-1">
+            <a class="btn btn-secondary" asp-controller="Likes" asp-action="UserLikes" asp-route-userId="@Model.Id">Вподобані</a>
+        </div>
+        <div class="col-md-6 mb-1">
+            <a class="btn btn-secondary" asp-controller="Follows" asp-action="UserFollowers" asp-route-userId="@Model.Id">Підписники</a>
+        </div>
+    </div>
+</div>
 
 
-<hr>
+<hr />
 
 @if (Model.Posts.Any())
 {
@@ -20,8 +55,6 @@
                 <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">@item.Caption</h5>
-                        <h4 class="mb-1">@user.Login</h4>
-                        <h4 class="mb-1">@item.Date</h4>
                     </div>
                     <p class="mb-1">@item.Description</p>
                 </a>

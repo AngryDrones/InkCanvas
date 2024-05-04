@@ -1,26 +1,56 @@
-﻿@model InkCanvas.Models.Post;
+﻿@model InkCanvas.Models.Post
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
     ViewData["Title"] = $"{Model.Caption}";
 }
 
+<style>
+    .Buttons {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .Likes {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .Subs {
+        width: 200px;
+        margin: 0 auto;
+        display: inline;
+    }
+</style>
+
 <h2>@Html.DisplayFor(model => model.Caption)</h2>
 <h4>@Html.DisplayFor(model => model.Description)</h4>
+<h4>@Html.DisplayFor(model => model.Date)</h4>
 
 <dd class="col-sm-10">
     @{
         var user = await UserManager.FindByIdAsync(Model.UserId);
         if (user != null)
         {
-            <span>@user.Login</span>
+            <a href="@Url.Action("UserProfile", "Account", new { userId = user.Id })"><h4>@user.Login</h4></a>
         }
         else
         {
-            <span>User not found</span>
+            <span>Користувача не знайдено.</span>
         }
-    } 
+    }
 </dd>
+
+
+<div class="Buttons">
+    <p>@Model.Likes.Count вподобайок.</p>
+    <button type="button" class="btn btn-primary">Лайк</button>
+    <button type="button" class="btn btn-primary">Коментар</button>
+</div>
+
+<hr />
 
 <div>
     @Html.Partial("CommentsList", Model.Comments)
@@ -29,4 +59,3 @@
 <form action="javascript:history.back()" class="m-0">
     <button type="submit" class="btn btn-secondary">Назад</button>
 </form>
-

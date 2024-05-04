@@ -1,0 +1,32 @@
+﻿@model User
+@{
+    var userPosts = Model.Posts.ToList();
+}
+
+<h3>Профіль @Model.Login</h3>
+
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Вік:</strong> @Model.Age</p>
+
+<hr />
+
+@if (userPosts.Any())
+{
+    <div class="container">
+        <div class="list-group">
+            @foreach (var item in userPosts)
+            {
+                <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@item.Caption</h5>
+                    </div>
+                    <p class="mb-1">@item.Description</p>
+                </a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h5>Поки що тут пусто.</h5>
+}

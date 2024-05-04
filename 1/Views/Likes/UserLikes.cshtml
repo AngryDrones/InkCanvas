@@ -1,0 +1,30 @@
+﻿@model IEnumerable<InkCanvas.Models.Like>
+@inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
+
+@{
+    ViewData["Title"] = "Вподобані";
+}
+
+<h3>Вподобані</h3>
+<hr />
+<div class="list-group">
+    @if (Model.Any())
+    {
+        @foreach (var like in Model)
+        {
+            var user = await UserManager.FindByIdAsync(like.UserId);
+            <a href="@Url.Action("Details", "Posts", new { id = like.PostId })" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@like.Post.Caption</h5>
+                    <h4 class="mb-1">@like.Post.Description</h4>
+                    @* <h4 class="mb-1">@like.Post.User.Login</h4> *@
+                </div>
+                <p class="mb-1">@like.Post.Description</p>
+            </a>
+        }
+    }
+    else
+    {
+        <p>Тут пусто.</p>
+    }
+</div>

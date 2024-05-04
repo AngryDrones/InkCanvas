@@ -129,5 +129,26 @@ namespace WEBAPPTEST.Controllers
             return View(userWithPosts);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UserProfile(string userId)
+        {
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Include the user's posts when retrieving the user data
+            var userWithPosts = await _context.Users
+                .Include(u => u.Posts)
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            return View(userWithPosts);
+        }
     }
 }
