@@ -40,6 +40,7 @@ namespace InkCanvas.Controllers
             var post = await _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Comments) // Include comments.
+                .Include(post => post.Likes) // and likes
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {

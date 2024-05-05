@@ -23,6 +23,49 @@ namespace InkCanvas.Controllers
             _context = context;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ToggleFollow(string userId)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userToFollow = await _userManager.FindByIdAsync(userId);
+
+            if (currentUser == null || userToFollow == null)
+            {
+                return NotFound();
+            }
+
+            // Check if the current user is already following the userToFollow
+            var isFollowing = await _context.Follows
+                .AnyAsync(f => f.UserId == userToFollow.Id && f.FollowerId == currentUser.Id);
+
+            if (isFollowing)
+            {
+                // Unfollow the user
+                var follow = await _context.Follows
+                    .FirstOrDefaultAsync(f => f.UserId == userToFollow.Id && f.FollowerId == currentUser.Id);
+
+                if (follow != null)
+                {
+                    _context.Follows.Remove(follow);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                // Follow the user
+                var follow = new Follow
+                {
+                    UserId = userToFollow.Id,
+                    FollowerId = currentUser.Id
+                };
+
+                _context.Follows.Add(follow);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
         // Action to display the followers of a specific user
         public async Task<IActionResult> UserFollowers(string userId)
         {

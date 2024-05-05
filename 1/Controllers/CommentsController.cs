@@ -8,17 +8,56 @@ using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 namespace InkCanvas.Controllers
 {
     //[Authorize(Roles = "admin")]
     public class CommentsController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly CloneIdentityContext _context;
 
-        public CommentsController(CloneIdentityContext context)
+        public CommentsController(UserManager<User> userManager, CloneIdentityContext context)
         {
+            _userManager = userManager;
             _context = context;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(int postId, string commentText)
+        {
+            // Find the current user
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                // User is not authenticated, handle accordingly
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Find the post
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null)
+            {
+                // Post not found, handle accordingly
+                return NotFound();
+            }
+
+            // Create a new comment
+            var comment = new Comment
+            {
+                PostId = postId,
+                UserId = user.Id,
+                Caption = commentText,
+                Date = DateTime.Now
+            };
+
+            // Add the comment to the database
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+
+            // Redirect back to the post details page
+            return RedirectToAction("Details", "Posts", new { id = postId });
         }
 
         // GET: Comments

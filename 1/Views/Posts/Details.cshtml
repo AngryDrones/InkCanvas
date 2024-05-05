@@ -43,11 +43,40 @@
     }
 </dd>
 
-
 <div class="Buttons">
-    <p>@Model.Likes.Count вподобайок.</p>
-    <button type="button" class="btn btn-primary">Лайк</button>
-    <button type="button" class="btn btn-primary">Коментар</button>
+    @{
+        if (Model.Likes.Any(l => l.UserId == UserManager.GetUserId(User)))
+        {
+            <button type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">♥</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">♡</button>
+        }
+    }
+    <div>
+    
+    @{
+        if (@Model.Likes.Count == 1)
+        {
+        <p>@Model.Likes.Count вподобайка.</p>
+        }
+        else if (@Model.Likes.Count == 2 || @Model.Likes.Count == 3 || @Model.Likes.Count == 4)
+        {
+            <p>@Model.Likes.Count вподобайки.</p>
+        }
+        else
+        {
+            <p>@Model.Likes.Count вподобайок.</p>
+        }
+    }
+
+    <form asp-controller="Comments" asp-action="CreateComment" method="post">
+        <input type="hidden" name="postId" value="@Model.PostId" />
+        <textarea name="commentText" class="form-control" rows="3" required></textarea>
+        <button type="submit" class="btn btn-primary">Коментар</button>
+    </form>
+    </div>
 </div>
 
 <hr />
@@ -59,3 +88,20 @@
 <form action="javascript:history.back()" class="m-0">
     <button type="submit" class="btn btn-secondary">Назад</button>
 </form>
+
+<script>
+    function toggleLike(postId) {
+        $.post({
+            url: "/Likes/Like",
+            data: { postId: postId },
+            success: function () {
+                // Reload the page or update the UI as needed
+                location.reload();
+            },
+            error: function (error) {
+                console.error(error);
+                // Handle error as needed
+            }
+        });
+    }
+</script>

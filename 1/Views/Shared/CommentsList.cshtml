@@ -10,13 +10,19 @@
             @foreach (var item in Model)
             {
                 var user = await UserManager.FindByIdAsync(item.UserId);
-                <tr>
+@*                 <tr>
                     <td><h4 class="login">@user.Login</h4></td>
                 </tr>
                 <tr>
                     <td><h5 class="caption">@item.Caption</h5></td>
                     <td><h4 class="date">@item.Date</h4></td>
-                </tr>
+                </tr> *@
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@user.Login</h5>
+                    <p class="mb-1">@item.Date</p>
+                </div>
+                <p class="mb-1">@item.Caption</p>
+                <hr />
             }
         </tbody>
     </table>

@@ -104,14 +104,14 @@ namespace WEBAPPTEST.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // Logged in user's profile.
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            // Find user with claims.
+            // Find user.
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
-                // If the user is not authenticated.
                 return RedirectToAction("Login", "Account");
             }
 
@@ -121,7 +121,7 @@ namespace WEBAPPTEST.Controllers
                 return NotFound();
             }
 
-            // Include the user's posts when retrieving the user data
+            // Include posts.
             var userWithPosts = await _context.Users
                 .Include(u => u.Posts)
                 .FirstOrDefaultAsync(u => u.Id == user.Id);
@@ -129,6 +129,7 @@ namespace WEBAPPTEST.Controllers
             return View(userWithPosts);
         }
 
+        // Other users' profiles.
         [HttpGet]
         public async Task<IActionResult> UserProfile(string userId)
         {
@@ -143,12 +144,13 @@ namespace WEBAPPTEST.Controllers
                 return NotFound();
             }
 
-            // Include the user's posts when retrieving the user data
+            // Include posts.
             var userWithPosts = await _context.Users
                 .Include(u => u.Posts)
                 .FirstOrDefaultAsync(u => u.Id == user.Id);
 
             return View(userWithPosts);
         }
+
     }
 }

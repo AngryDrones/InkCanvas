@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
@@ -41,6 +42,32 @@ namespace InkCanvas.Controllers
                 .ToListAsync();
 
             return View(userLikes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Like(int postId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized(); // or handle as needed
+            }
+
+            var like = await _context.Likes.FirstOrDefaultAsync(l => l.UserId == userId && l.PostId == postId);
+            if (like == null)
+            {
+                // If the user hasn't liked the post yet, add a new like
+                like = new Like { UserId = userId, PostId = postId };
+                _context.Likes.Add(like);
+            }
+            else
+            {
+                // If the user has already liked the post, remove the like
+                _context.Likes.Remove(like);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home"); // or redirect to the post's details page or any other appropriate page
         }
 
         // GET: Likes

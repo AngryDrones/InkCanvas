@@ -1,20 +1,19 @@
 ﻿@model User
-@{
-    var userPosts = Model.Posts.ToList();
-}
+@inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 <h3>Профіль @Model.Login</h3>
 
 <p><strong>Email:</strong> @Model.Email</p>
 <p><strong>Вік:</strong> @Model.Age</p>
 
+<button type="button" class="btn btn-primary" onclick="toggleFollow('@Model.Id')">Стежити</button>
 <hr />
 
-@if (userPosts.Any())
+@if (Model.Posts.Any())
 {
     <div class="container">
         <div class="list-group">
-            @foreach (var item in userPosts)
+            @foreach (var item in Model.Posts)
             {
                 <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
@@ -30,3 +29,18 @@ else
 {
     <h5>Поки що тут пусто.</h5>
 }
+
+<script>
+    function toggleFollow(userId) {
+        $.post({
+            url: "/Follows/ToggleFollow",
+            data: { userId: userId },
+            success: function () {
+                location.reload();
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
