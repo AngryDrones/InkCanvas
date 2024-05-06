@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<InkCanvas.Models.User>
 
 @{
-    ViewData["Title"] = "Followers";
+    ViewData["Title"] = "підпищікі";
 }
 
-<h3>Підписники</h3>
+<h3>Підписники: @Model.Count()</h3>
 <hr />
 @if (Model.Any())
 {

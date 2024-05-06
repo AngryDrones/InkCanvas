@@ -16,9 +16,11 @@ namespace InkCanvas.Controllers
     public class PostsController : Controller
     {
         private readonly CloneIdentityContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public PostsController(CloneIdentityContext context)
+        public PostsController(IWebHostEnvironment hostEnvironment, CloneIdentityContext context)
         {
+            _hostEnvironment = hostEnvironment;
             _context = context;
         }
 
@@ -39,7 +41,7 @@ namespace InkCanvas.Controllers
 
             var post = await _context.Posts
                 .Include(p => p.User)
-                .Include(p => p.Comments) // Include comments.
+                .Include(p => p.Comments) // Include comments
                 .Include(post => post.Likes) // and likes
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
@@ -60,27 +62,76 @@ namespace InkCanvas.Controllers
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("PostId,Caption,Description")] Post post)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //        post.UserId = userId;
+
+        //        DateTime date = DateTime.Now;
+        //        post.Date = date;
+
+        //        _context.Add(post);
+        //        await _context.SaveChangesAsync();
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
+
+        //    return View(post);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Caption,Description")] Post post)
+        public async Task<IActionResult> Create([Bind("Caption,Description")] Post post, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    try
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+
+                        var uploadPath = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+
+                        if (!Directory.Exists(uploadPath))
+                        {
+                            Directory.CreateDirectory(uploadPath);
+                        }
+
+                        var filePath = Path.Combine(uploadPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        }
+
+                        post.ImageUrl = "/uploads/" + fileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("ImageFile", $"Image upload failed: {ex.Message}");
+                        return View(post);
+                    }
+                }
+
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 post.UserId = userId;
-
-                DateTime date = DateTime.Now;
-                post.Date = date;
+                post.Date = DateTime.Now;
 
                 _context.Add(post);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", post.UserId);
 
             return View(post);
         }
+
 
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -216,5 +267,52 @@ namespace InkCanvas.Controllers
             ViewBag.Message = message;
             return View("./Views/PostSearch/NoResultsFound.cshtml");
         }
+
+        [HttpPost]
+        public IActionResult Upload(IFormFile imageFile)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                try
+                {
+                    // Generate a unique file name
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+
+                    // Get the path where you want to store the image
+                    var uploadPath = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+
+                    // Ensure the upload directory exists
+                    if (!Directory.Exists(uploadPath))
+                    {
+                        Directory.CreateDirectory(uploadPath);
+                    }
+
+                    // Combine the upload path and file name
+                    var filePath = Path.Combine(uploadPath, fileName);
+
+                    // Save the file to the server
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        imageFile.CopyTo(stream);
+                    }
+
+                    // Notify the user that upload was successful
+                    TempData["Message"] = "Upload successful!";
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occur during the upload process
+                    TempData["ErrorMessage"] = $"Upload failed: {ex.Message}";
+                }
+            }
+            else
+            {
+                // Handle the case where no file was uploaded
+                TempData["ErrorMessage"] = "Please select a file to upload.";
+            }
+
+            return RedirectToAction("Index"); // Redirect to Index action after upload attempt
+        }
+
     }
 }

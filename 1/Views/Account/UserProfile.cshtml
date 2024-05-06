@@ -19,7 +19,10 @@
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">@item.Caption</h5>
                     </div>
-                    <p class="mb-1">@item.Description</p>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" class="mr-3" alt="Post Image" style="width: 210px; height: 210px;">
+                    }
                 </a>
             }
         </div>

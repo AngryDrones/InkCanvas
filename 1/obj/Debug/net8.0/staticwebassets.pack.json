@@ -253,6 +253,30 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\0eb1dae4-fb1e-4319-80d4-3dac3a4bd9af.jpg",
+      "PackagePath": "staticwebassets\\uploads\\0eb1dae4-fb1e-4319-80d4-3dac3a4bd9af.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\3383283a-22c3-4856-a0f9-646beae85555.png",
+      "PackagePath": "staticwebassets\\uploads\\3383283a-22c3-4856-a0f9-646beae85555.png"
+    },
+    {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\3bc80c89-34c0-474d-9634-c95c2247877b.jpg",
+      "PackagePath": "staticwebassets\\uploads\\3bc80c89-34c0-474d-9634-c95c2247877b.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\3cb4fb5e-a776-4391-b405-752967241f55.png",
+      "PackagePath": "staticwebassets\\uploads\\3cb4fb5e-a776-4391-b405-752967241f55.png"
+    },
+    {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\5a9ebc79-4b24-4d44-a751-2b9b5a59f5a1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\5a9ebc79-4b24-4d44-a751-2b9b5a59f5a1.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\94d9968b-d9a3-47c2-bb0e-3611bce74ae4.jpg",
+      "PackagePath": "staticwebassets\\uploads\\94d9968b-d9a3-47c2-bb0e-3611bce74ae4.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.InkCanvas.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

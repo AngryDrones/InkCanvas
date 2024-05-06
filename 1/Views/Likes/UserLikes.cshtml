@@ -13,13 +13,16 @@
         @foreach (var like in Model)
         {
             var user = await UserManager.FindByIdAsync(like.UserId);
+            var postUser = await UserManager.FindByIdAsync(like.Post.UserId);
             <a href="@Url.Action("Details", "Posts", new { id = like.PostId })" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@like.Post.Caption</h5>
-                    <h4 class="mb-1">@like.Post.Description</h4>
-                    @* <h4 class="mb-1">@like.Post.User.Login</h4> *@
+                    <h4 class="mb-1">@postUser.Login</h4>
                 </div>
-                <p class="mb-1">@like.Post.Description</p>
+                @if (!string.IsNullOrEmpty(like.Post.ImageUrl))
+                {
+                    <img src="@like.Post.ImageUrl" class="mr-3" alt="Post Image" style="max-width: 210px; max-height: 210px;">
+                }
             </a>
         }
     }

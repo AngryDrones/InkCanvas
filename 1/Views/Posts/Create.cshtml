@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Caption" class="control-label"></label>
@@ -21,12 +21,18 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <div class="form-group" enctype="multipart/form-data">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control-file" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Опублікувати" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
 
 <form action="javascript:history.back()" class="m-0">
     <button type="submit" class="btn btn-secondary">Назад</button>

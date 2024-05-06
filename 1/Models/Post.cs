@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InkCanvas.Models;
 
@@ -23,4 +24,8 @@ public partial class Post
     public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
 
     public virtual User User { get; set; }
+
+    [DisplayName("Зображення")]
+    [NotMapped]
+    public IFormFile ImageFile { get; set; }
 }

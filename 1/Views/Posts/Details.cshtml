@@ -25,6 +25,10 @@
     }
 </style>
 
+@if (!string.IsNullOrEmpty(Model.ImageUrl))
+{
+    <img src="@Model.ImageUrl" alt="Post Image" style="max-width: 500px; max-height: 500px;"/>
+}
 <h2>@Html.DisplayFor(model => model.Caption)</h2>
 <h4>@Html.DisplayFor(model => model.Description)</h4>
 <h4>@Html.DisplayFor(model => model.Date)</h4>

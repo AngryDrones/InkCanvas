@@ -9,14 +9,20 @@
     <div class="list-group">
         @foreach (var item in Model)
         {
-        var user = await UserManager.FindByIdAsync(item.UserId);
-        <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">@item.Caption</h5>
-                <h4 class="mb-1">@user.Login</h4>
-            </div>
-            <p class="mb-1">@item.Description</p>
-        </a>
+            var user = await UserManager.FindByIdAsync(item.UserId);
+            <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <h5 class="mb-1">@item.Caption</h5>
+                    </div>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" class="mr-3" alt="Post Image" style="width: 210px; height: 210px;">
+                    }
+                </div>
+                <h6 class="mb-1">@user.Login</h6>
+            </a>
         }
     </div>
 </div>
+
