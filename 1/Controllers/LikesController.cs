@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "user,admin")]
     public class LikesController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -31,11 +31,9 @@ namespace InkCanvas.Controllers
 
             if (user == null)
             {
-                // If the user is not found, return a not found result
                 return NotFound();
             }
 
-            // Get the likes of the specified user
             var userLikes = await _context.Likes
                 .Include(l => l.Post) // Include the related post
                 .Where(l => l.UserId == userId)
@@ -71,6 +69,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Likes
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var cloneIdentityContext = _context.Likes.Include(l => l.Post).Include(l => l.User);

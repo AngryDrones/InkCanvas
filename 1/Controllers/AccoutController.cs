@@ -4,7 +4,7 @@ using InkCanvas.ViewModel;
 using InkCanvas.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-namespace WEBAPPTEST.Controllers
+namespace InkCanvas.Controllers
 {
     public class AccountController : Controller
     {
@@ -104,7 +104,7 @@ namespace WEBAPPTEST.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Logged in user's profile.
+        // Logged-in user's profile.
         [HttpGet]
         public async Task<IActionResult> Profile()
         {

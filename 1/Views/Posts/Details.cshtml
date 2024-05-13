@@ -48,7 +48,8 @@
 </dd>
 
 <div class="Buttons">
-    @{
+    @if (User.Identity.IsAuthenticated)
+    {
         if (Model.Likes.Any(l => l.UserId == UserManager.GetUserId(User)))
         {
             <button type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">♥</button>
@@ -71,15 +72,17 @@
         }
         else
         {
-            <p>@Model.Likes.Count вподобайок.</p>
+                <p>@Model.Likes.Count вподобайок.</p>
+            }
         }
-    }
-
-    <form asp-controller="Comments" asp-action="CreateComment" method="post">
+        @if (User.Identity.IsAuthenticated)
+        {
+        <form asp-controller="Comments" asp-action="CreateComment" method="post">
         <input type="hidden" name="postId" value="@Model.PostId" />
         <textarea name="commentText" class="form-control" rows="3" required></textarea>
         <button type="submit" class="btn btn-primary">Коментар</button>
-    </form>
+        </form>
+        }
     </div>
 </div>
 
@@ -99,12 +102,10 @@
             url: "/Likes/Like",
             data: { postId: postId },
             success: function () {
-                // Reload the page or update the UI as needed
                 location.reload();
             },
             error: function (error) {
                 console.error(error);
-                // Handle error as needed
             }
         });
     }

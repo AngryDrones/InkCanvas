@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5pidpm2Ktw84BKIuSwXyJO6Cs3iymn7JoKoJCcsca6M=",
+  "Hash": "N2Ol3jdnDymFlf7/YZfbWv0/DOzgpO27oYwXUQJeb9A=",
   "Source": "InkCanvas",
   "BasePath": "_content/InkCanvas",
   "Mode": "Default",
@@ -1231,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Projects\\2\\1\\wwwroot\\uploads\\0c6dd339-c8e2-49e5-99e1-c77871b32416.png",
+      "SourceId": "InkCanvas",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\2\\1\\wwwroot\\",
+      "BasePath": "_content/InkCanvas",
+      "RelativePath": "uploads/0c6dd339-c8e2-49e5-99e1-c77871b32416.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\0c6dd339-c8e2-49e5-99e1-c77871b32416.png"
     },
     {
       "Identity": "C:\\Projects\\2\\1\\wwwroot\\uploads\\0eb1dae4-fb1e-4319-80d4-3dac3a4bd9af.jpg",

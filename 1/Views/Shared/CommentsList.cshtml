@@ -1,22 +1,15 @@
 ﻿@model IEnumerable<InkCanvas.Models.Comment>
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
+<h4>Коментарі</h4>
 @if (Model.Any())
 {
-    <h4>Коментарі</h4>
     <hr />
     <table class="table">
         <tbody>
             @foreach (var item in Model)
             {
                 var user = await UserManager.FindByIdAsync(item.UserId);
-@*                 <tr>
-                    <td><h4 class="login">@user.Login</h4></td>
-                </tr>
-                <tr>
-                    <td><h5 class="caption">@item.Caption</h5></td>
-                    <td><h4 class="date">@item.Date</h4></td>
-                </tr> *@
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@user.Login</h5>
                     <p class="mb-1">@item.Date</p>
@@ -26,8 +19,18 @@
             }
         </tbody>
     </table>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p> Ввійдіть, щоб написати коментар</p>
+    }
+}
+else 
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Напишіть перший коментар.</p>
 }
 else
 {
-    <p>Напишіть перший коментар!</p>
+    <p> Ввійдіть, щоб написати коментар.</p>
 }

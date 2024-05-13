@@ -24,6 +24,7 @@ namespace LibraryWebApplication
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {
+                    await userManager.AddToRoleAsync(admin, "user");
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
             }

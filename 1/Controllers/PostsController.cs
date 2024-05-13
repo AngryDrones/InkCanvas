@@ -12,7 +12,6 @@ using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles="user,admin")]
     public class PostsController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -25,6 +24,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Posts
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var cloneIdentityContext = _context.Posts.Include(p => p.User);
@@ -53,6 +53,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Roles = "user,admin")]
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
@@ -86,6 +87,7 @@ namespace InkCanvas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> Create([Bind("Caption,Description")] Post post, IFormFile imageFile)
         {
             if (ModelState.IsValid)
@@ -126,7 +128,7 @@ namespace InkCanvas.Controllers
                 _context.Add(post);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return View("./Views/Account/Profile.cshtml");
             }
 
             return View(post);
@@ -134,6 +136,7 @@ namespace InkCanvas.Controllers
 
 
         // GET: Posts/Edit/5
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -155,6 +158,7 @@ namespace InkCanvas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> Edit(int id, [Bind("PostId,UserId,Caption,Description")] Post post)
         {
             if (id != post.PostId)
@@ -187,6 +191,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -206,6 +211,7 @@ namespace InkCanvas.Controllers
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Roles = "user,admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -236,6 +242,7 @@ namespace InkCanvas.Controllers
         }
 
         // ALL posts view.
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> AllPosts()
         {
             var posts = await _context.Posts.ToListAsync();
@@ -269,49 +276,42 @@ namespace InkCanvas.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "user,admin")]
         public IActionResult Upload(IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
                 try
                 {
-                    // Generate a unique file name
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
 
-                    // Get the path where you want to store the image
                     var uploadPath = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
 
-                    // Ensure the upload directory exists
                     if (!Directory.Exists(uploadPath))
                     {
                         Directory.CreateDirectory(uploadPath);
                     }
 
-                    // Combine the upload path and file name
                     var filePath = Path.Combine(uploadPath, fileName);
 
-                    // Save the file to the server
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
 
-                    // Notify the user that upload was successful
-                    TempData["Message"] = "Upload successful!";
+                    TempData["Message"] = "Публікацію додано успішно.";
                 }
                 catch (Exception ex)
                 {
-                    // Handle any exceptions that occur during the upload process
-                    TempData["ErrorMessage"] = $"Upload failed: {ex.Message}";
+                    TempData["ErrorMessage"] = $"Помилка: {ex.Message}";
                 }
             }
             else
             {
-                // Handle the case where no file was uploaded
-                TempData["ErrorMessage"] = "Please select a file to upload.";
+                TempData["ErrorMessage"] = "Виберіть файл.";
             }
 
-            return RedirectToAction("Index"); // Redirect to Index action after upload attempt
+            return RedirectToAction("Index");
         }
 
     }

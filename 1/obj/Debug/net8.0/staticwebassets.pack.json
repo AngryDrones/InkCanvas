@@ -253,6 +253,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\0c6dd339-c8e2-49e5-99e1-c77871b32416.png",
+      "PackagePath": "staticwebassets\\uploads\\0c6dd339-c8e2-49e5-99e1-c77871b32416.png"
+    },
+    {
       "Id": "C:\\Projects\\2\\1\\wwwroot\\uploads\\0eb1dae4-fb1e-4319-80d4-3dac3a4bd9af.jpg",
       "PackagePath": "staticwebassets\\uploads\\0eb1dae4-fb1e-4319-80d4-3dac3a4bd9af.jpg"
     },

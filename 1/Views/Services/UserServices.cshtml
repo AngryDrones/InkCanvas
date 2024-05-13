@@ -1,0 +1,24 @@
+﻿<a href="@Url.Action("Export", "Services")" class="btn btn-primary">Експорт публікацій</a>
+<form method="post" enctype="multipart/form-data" action="@Url.Action("Import", "Services")">
+    <div class="form-group">
+        <label for="file">Select Excel File:</label>
+        <input type="file" class="form-control-file" id="file" name="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Імпорт публікацій</button>
+</form>
+
+@if (TempData["ErrorMessages"] is string[] errorMessages)
+{
+    <div class="alert alert-dismissible alert-danger fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Упс! Щось пішло не так</strong>
+        @foreach (var errorMessage in errorMessages)
+        {
+            <p>@errorMessage</p>
+        }
+    </div>
+}
+
+<form action="javascript:history.back()" class="m-0">
+    <button type="submit" class="btn btn-secondary">Назад</button>
+</form>

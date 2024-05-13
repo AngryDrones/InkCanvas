@@ -37,6 +37,7 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Акаунт</a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="@Url.Action("Profile", "Account")">Профіль</a>
+                                <a class="dropdown-item" href="@Url.Action("UserServices", "Services")">Імпорт/експорт</a>
                             </div>
                         </li>
                     </ul>
@@ -48,9 +49,9 @@
                             <li class="nav-item dropdown" style="width: 120px">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Керування</a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="@Url.Action("Index", "Services")">Імпорт/експорт</a>
                                     <a class="dropdown-item" href="@Url.Action("Index", "Roles")">Ролі</a>
                                     <a class="dropdown-item" href="@Url.Action("Index", "Chart")">Статистика</a>
+                                    <a class="dropdown-item" href="@Url.Action("AdminServices", "Services")">Експорт</a>
                                 </div>
                             </li>
                         </ul>
