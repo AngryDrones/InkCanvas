@@ -42,34 +42,67 @@ namespace InkCanvas.Controllers
             return View(userLikes);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Like(int postId)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    if (userId == null)
+        //    {
+        //        return Unauthorized(); // or handle as needed
+        //    }
+
+        //    var like = await _context.Likes.FirstOrDefaultAsync(l => l.UserId == userId && l.PostId == postId);
+        //    if (like == null)
+        //    {
+        //        // If the user hasn't liked the post yet, add a new like
+        //        like = new Like { UserId = userId, PostId = postId };
+        //        _context.Likes.Add(like);
+        //    }
+        //    else
+        //    {
+        //        // If the user has already liked the post, remove the like
+        //        _context.Likes.Remove(like);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction("Index", "Home"); // or redirect to the post's details page or any other appropriate page
+        //}
+
         [HttpPost]
         public async Task<IActionResult> Like(int postId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                return Unauthorized(); // or handle as needed
+                return Unauthorized();
             }
 
-            var like = await _context.Likes.FirstOrDefaultAsync(l => l.UserId == userId && l.PostId == postId);
+            var post = await _context.Posts.Include(p => p.Likes).FirstOrDefaultAsync(p => p.PostId == postId);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            var like = post.Likes.FirstOrDefault(l => l.UserId == user.Id);
             if (like == null)
             {
-                // If the user hasn't liked the post yet, add a new like
-                like = new Like { UserId = userId, PostId = postId };
-                _context.Likes.Add(like);
+                // Add like
+                _context.Likes.Add(new Like { PostId = postId, UserId = user.Id });
             }
             else
             {
-                // If the user has already liked the post, remove the like
+                // Remove like
                 _context.Likes.Remove(like);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home"); // or redirect to the post's details page or any other appropriate page
+
+            // Return the updated like count
+            return Json(new { likeCount = post.Likes.Count() });
         }
 
-        // GET: Likes
-        [Authorize(Roles = "admin")]
+    // GET: Likes
+    [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var cloneIdentityContext = _context.Likes.Include(l => l.Post).Include(l => l.User);

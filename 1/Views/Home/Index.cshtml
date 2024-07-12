@@ -5,24 +5,73 @@
     ViewData["Title"] = "Головна";
 }
 
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .custom-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .custom-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .post-item {
+        position: relative;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .post-image {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* square container */
+        background-position: center;
+        background-size: cover;
+    }
+
+    .post-content {
+        padding: 10px;
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+
 <div class="container">
-    <div class="list-group">
-        @foreach (var item in Model)
-        {
-            var user = await UserManager.FindByIdAsync(item.UserId);
-            <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <div>
-                        <h5 class="mb-1">@item.Caption</h5>
-                    </div>
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@item.ImageUrl" class="mr-3" alt="Post Image" style="width: 210px; height: 210px;">
-                    }
-                </div>
-                <h6 class="mb-1">@user.Login</h6>
-            </a>
-        }
+    <div class="row">
+        <div class="col-3">
+            <!-- Empty left panel -->
+            boo
+        </div>
+        <div class="col-6 custom-scrollbar" style="overflow-y: scroll; max-height: 100vh;">
+            <div class="list-group">
+                @foreach (var item in Model)
+                {
+                    var user = await UserManager.FindByIdAsync(item.UserId);
+                    <a href="@Url.Action("Details", "Posts", new { id = item.PostId })" class="list-group-item list-group-item-action">
+                        @* <div class="list-group-item post-item"> *@
+                        <div class="post-image" style="background-image: url('@item.ImageUrl');"></div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <h5 class="mb-1">@item.Caption</h5>
+                            </div>
+                            <h6 class="mb-1">@user.Login</h6>
+                            <div>Likes: @item.Likes.Count</div>
+                        </div>
+                        @* </div> *@
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="col-3">
+            <!-- Empty right panel -->
+        </div>
     </div>
 </div>
-

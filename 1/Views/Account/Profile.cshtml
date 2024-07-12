@@ -19,9 +19,30 @@
         margin: 0 auto;
         display: inline;
     }
+
+    .edit-icon {
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .edit-form {
+        display: none;
+    }
 </style>
 
-<h3>Профіль @Model.Login</h3>
+<h3>
+    Профіль @Model.Login
+    <span class="edit-icon" onclick="toggleEditForm()">u</span>
+</h3>
+
+<div id="editForm" class="edit-form">
+    <form asp-action="UpdateLogin" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" id="newLogin" name="newLogin" value="@Model.Login" />
+        </div>
+        <button type="submit" class="btn btn-primary">Оновити Логін</button>
+    </form>
+</div>
 
 @Model.Email</p>
 <p><strong>Вік:</strong> @Model.Age</p>
@@ -69,3 +90,14 @@ else
 {
     <h5>Поки що тут пусто.</h5>
 }
+
+<script>
+    function toggleEditForm() {
+        var form = document.getElementById('editForm');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>

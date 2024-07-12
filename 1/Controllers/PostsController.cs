@@ -27,7 +27,7 @@ namespace InkCanvas.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
-            var cloneIdentityContext = _context.Posts.Include(p => p.User);
+            var cloneIdentityContext = _context.Posts.Include(p => p.User).Include(p => p.Likes);
             return View(await cloneIdentityContext.ToListAsync());
         }
 
@@ -40,9 +40,9 @@ namespace InkCanvas.Controllers
             }
 
             var post = await _context.Posts
-                .Include(p => p.User)
                 .Include(p => p.Comments) // Include comments
-                .Include(post => post.Likes) // and likes
+                .Include(p => p.User)
+                .Include(p => p.Likes) // and likes
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {

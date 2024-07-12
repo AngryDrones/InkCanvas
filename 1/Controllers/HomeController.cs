@@ -14,9 +14,19 @@ namespace InkCanvas.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Test()
         {
             var cloneContext = _context.Posts.Include(p => p.User);
+
+            //return View();
+            return View(await cloneContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var cloneContext = _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Likes);
 
             //return View();
             return View(await cloneContext.ToListAsync());

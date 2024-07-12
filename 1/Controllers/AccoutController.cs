@@ -152,5 +152,36 @@ namespace InkCanvas.Controllers
             return View(userWithPosts);
         }
 
+        // Action to handle the form submission for updating username
+        [HttpPost]
+        public async Task<IActionResult> Updatelogin(string newLogin)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return NotFound();
+            }
+
+            if (!string.IsNullOrEmpty(newLogin))
+            {
+                currentUser.Login = newLogin;
+                var result = await _userManager.UpdateAsync(currentUser);
+
+                if (result.Succeeded)
+                {
+                    // Optionally add logic to handle success, e.g., a success message
+                }
+                else
+                {
+                    // Optionally add logic to handle errors, e.g., displaying error messages
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return RedirectToAction("Profile");
+        }
     }
 }

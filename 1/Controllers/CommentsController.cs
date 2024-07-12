@@ -203,5 +203,31 @@ namespace InkCanvas.Controllers
         {
             return _context.Comments.Any(e => e.CommentId == id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(int commentId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var comment = await _context.Comments.FindAsync(commentId);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            //if (comment.UserId != user.Id && !User.IsInRole("admin"))
+            //{
+            //    return Forbid();
+            //}
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

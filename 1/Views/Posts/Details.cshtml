@@ -27,7 +27,7 @@
 
 @if (!string.IsNullOrEmpty(Model.ImageUrl))
 {
-    <img src="@Model.ImageUrl" alt="Post Image" style="max-width: 500px; max-height: 500px;"/>
+    <img src="@Model.ImageUrl" alt="Post Image" style="max-width: 500px; max-height: 500px;" />
 }
 <h2>@Html.DisplayFor(model => model.Caption)</h2>
 <h4>@Html.DisplayFor(model => model.Description)</h4>
@@ -50,40 +50,31 @@
 <div class="Buttons">
     @if (User.Identity.IsAuthenticated)
     {
-        if (Model.Likes.Any(l => l.UserId == UserManager.GetUserId(User)))
-        {
-            <button type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">♥</button>
-        }
-        else
-        {
-            <button type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">♡</button>
-        }
+        var isLiked = Model.Likes.Any(l => l.UserId == UserManager.GetUserId(User));
+        <button id="likeButton" type="button" class="btn btn-primary" onclick="toggleLike(@Model.PostId)">
+            @(isLiked ? "♥" : "♡")
+        </button>
     }
-    <div>
-    
-    @{
-        if (@Model.Likes.Count == 1)
-        {
-        <p>@Model.Likes.Count вподобайка.</p>
-        }
-        else if (@Model.Likes.Count == 2 || @Model.Likes.Count == 3 || @Model.Likes.Count == 4)
-        {
-            <p>@Model.Likes.Count вподобайки.</p>
-        }
-        else
-        {
-                <p>@Model.Likes.Count вподобайок.</p>
-            }
-        }
-        @if (User.Identity.IsAuthenticated)
-        {
-        <form asp-controller="Comments" asp-action="CreateComment" method="post">
-        <input type="hidden" name="postId" value="@Model.PostId" />
-        <textarea name="commentText" class="form-control" rows="3" required></textarea>
-        <button type="submit" class="btn btn-primary">Коментар</button>
-        </form>
+    <div id="likeCount">
+        @{
+            var likeText = Model.Likes.Count switch
+            {
+                1 => "вподобайка",
+                2 or 3 or 4 => "вподобайки",
+                _ => "вподобайок"
+            };
+            <p>@Model.Likes.Count @likeText.</p>
         }
     </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Comments" asp-action="CreateComment" method="post">
+            <input type="hidden" name="postId" value="@Model.PostId" />
+            <textarea name="commentText" class="form-control" rows="3" required></textarea>
+            <button type="submit" class="btn btn-primary">Коментар</button>
+        </form>
+    }
+</div>
 </div>
 
 <hr />
@@ -101,8 +92,33 @@
         $.post({
             url: "/Likes/Like",
             data: { postId: postId },
-            success: function () {
-                location.reload();
+            success: function (data) {
+                const likeButton = document.getElementById('likeButton');
+                const likeCount = document.getElementById('likeCount');
+
+                // Toggle like button text
+                if (likeButton.innerText === '♡') {
+                    likeButton.innerText = '♥';
+                } else {
+                    likeButton.innerText = '♡';
+                }
+
+                // Update like count text
+                let likeText;
+                switch (data.likeCount) {
+                    case 1:
+                        likeText = "вподобайка";
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                        likeText = "вподобайки";
+                        break;
+                    default:
+                        likeText = "вподобайок";
+                        break;
+                }
+                likeCount.innerHTML = `<p>${data.likeCount} ${likeText}.</p>`;
             },
             error: function (error) {
                 console.error(error);
