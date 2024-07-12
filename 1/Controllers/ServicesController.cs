@@ -40,7 +40,7 @@ namespace _1.Controllers
 
             if (file == null || file.Length == 0)
             {
-                errorMessages.Add("Щось не так із файлом, спробуйте ще раз");
+                errorMessages.Add("Something is wrong with a file, perhaps try again?");
                 TempData["ErrorMessages"] = errorMessages.ToArray();
                 return RedirectToAction("UserServices");
             }
@@ -49,7 +49,7 @@ namespace _1.Controllers
             {
                 if (!file.FileName.EndsWith(".xlsx") && !file.FileName.EndsWith(".xls"))
                 {
-                    errorMessages.Add("Дозволені лише файли з розширенням .xlsx та allowed.");
+                    errorMessages.Add("Only .xlsx and .xls extensions are allowed.");
                     TempData["ErrorMessages"] = errorMessages.ToArray();
                     return RedirectToAction("UserServices");
                 }
@@ -74,30 +74,30 @@ namespace _1.Controllers
                             var userExists = await _userManager.FindByIdAsync(currentUserId) != null;
                             if (!userExists)
                             {
-                                errorMessages.Add("Користувача з таким ID не знайдено.");
+                                errorMessages.Add("No user with such ID.");
                                 break;
                             }
 
                             if (caption.Length > 64)
                             {
-                                errorMessages.Add($"Рядок {rowNum}: Назва публікації перевищує 64 символи.");
+                                errorMessages.Add($"Column {rowNum}: Post caption exceeds 64 symbols.");
                                 continue;
                             }
                             if (caption.Length == 0)
                             {
-                                errorMessages.Add($"Рядок {rowNum}: Назва публікації не може бути пустою.");
+                                errorMessages.Add($"Row {rowNum}: Post caption cannot be empty.");
                                 continue;
                             }
 
                             if (description.Length > 254)
                             {
-                                errorMessages.Add($"Рядок {rowNum}: Опис перевищує 254 символи.");
+                                errorMessages.Add($"Row {rowNum}: Description exceeds 254 symbols.");
                                 continue;
                             }
 
                             if (imageUrl.Length > 254)
                             {
-                                errorMessages.Add($"Рядок {rowNum}: Посилання на фото перевищує 254 символи.");
+                                errorMessages.Add($"Row {rowNum}: Image link exceeds 254 symbols.");
                                 continue;
                             }
 

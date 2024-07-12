@@ -13,7 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CloneIdentityContext>(option => option.UseSqlServer(
 builder.Configuration.GetConnectionString("DefaultConnection")
 ));
-// here
+// what
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CloneIdentityContext>();
 
 // Password settings

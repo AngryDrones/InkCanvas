@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<InkCanvas.Models.Comment>
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
-<h4>Коментарі</h4>
+<h4>Comments</h4>
 @if (Model.Any())
 {
     <hr />
@@ -22,15 +22,15 @@
 
     @if (!User.Identity.IsAuthenticated)
     {
-        <p> Ввійдіть, щоб написати коментар</p>
+        <p> Log in to comment</p>
     }
 }
 else 
 @if (User.Identity.IsAuthenticated)
 {
-    <p>Напишіть перший коментар.</p>
+    <p>Be the first person to comment.</p>
 }
 else
 {
-    <p> Ввійдіть, щоб написати коментар.</p>
+    <p> Log in to comment.</p>
 }

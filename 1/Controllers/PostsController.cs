@@ -254,7 +254,7 @@ namespace InkCanvas.Controllers
         {
             if (string.IsNullOrEmpty(searchString))
             {
-                return RedirectToAction("NoResultsFound", new { message = "Спробуйте ввести кілька букв" });
+                return RedirectToAction("NoResultsFound", new { message = "Try typing something in" });
             }
 
             var posts = await _context.Posts
@@ -263,7 +263,7 @@ namespace InkCanvas.Controllers
 
             if (posts == null || posts.Count == 0)
             {
-                return RedirectToAction("NoResultsFound", new { message = "За Вашим запитом нічого не знайдено :(" });
+                return RedirectToAction("NoResultsFound", new { message = "Nothing was found :(" });
             }
 
             return View("./Views/PostSearch/SearchPost.cshtml", posts);

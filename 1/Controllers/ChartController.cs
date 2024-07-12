@@ -22,15 +22,15 @@ namespace InkCanvas.Controllers
             var users = _context.Users.ToList();
             var ageDistribution = new Dictionary<string, int>
             {
-                { "До 18", users.Count(u => u.Age < 18) },
+                { "Under 18", users.Count(u => u.Age < 18) },
                 { "18-25", users.Count(u => u.Age >= 18 && u.Age <= 25) },
                 { "26-35", users.Count(u => u.Age >= 26 && u.Age <= 35) },
                 { "36-45", users.Count(u => u.Age >= 36 && u.Age <= 45) },
                 { "46-55", users.Count(u => u.Age >= 46 && u.Age <= 55) },
-                { "56 і старші", users.Count(u => u.Age >= 56) }
+                { "56 and older", users.Count(u => u.Age >= 56) }
             };
             var userChartData = ageDistribution.Select(pair => new object[] { pair.Key, pair.Value }).ToList();
-            userChartData.Insert(0, new object[] { "Вікова категорія", "Кількість користувачів" });
+            userChartData.Insert(0, new object[] { "Age category", "Users" });
 
             // Chart data for like distribution of the 10 most liked posts.
             var mostLikedPosts = _context.Posts
@@ -44,7 +44,7 @@ namespace InkCanvas.Controllers
 
             // Modifying the like distribution data to include post names and IDs.
             var likeChartData = mostLikedPosts.Select((post, index) => new object[] { $"{post.Caption} (PostId: {post.PostId})", likeDistribution[index] }).ToList();
-            likeChartData.Insert(0, new object[] { "Пост", "Кількість вподобань" });
+            likeChartData.Insert(0, new object[] { "Post", "Like count" });
 
             ViewBag.UserChartData = userChartData;
             ViewBag.LikeChartData = likeChartData;

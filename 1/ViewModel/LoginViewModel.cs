@@ -9,9 +9,9 @@ namespace InkCanvas.ViewModel
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
-        [Display(Name = "Запам'ятати?")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
         public string ReturnUrl { get; set; }
     }

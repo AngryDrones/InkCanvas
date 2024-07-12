@@ -2,10 +2,10 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
-    ViewData["Title"] = "Результати пошуку";
+    ViewData["Title"] = "Search results";
 }
 
-<h3>Ось, що ми знайшли</h3>
+<h3>Here is what we've found</h3>
 <div class="container">
     <div class="list-group">
         @foreach (var item in Model)

@@ -34,13 +34,13 @@ namespace InkCanvas.Controllers
                 return NotFound();
             }
 
-            // Check if the current user is already following the userToFollow
+            // check if the current user is already following the userToFollow
             var isFollowing = await _context.Follows
                 .AnyAsync(f => f.UserId == userToFollow.Id && f.FollowerId == currentUser.Id);
 
             if (isFollowing)
             {
-                // Unfollow the user
+                // unfollow the user
                 var follow = await _context.Follows
                     .FirstOrDefaultAsync(f => f.UserId == userToFollow.Id && f.FollowerId == currentUser.Id);
 
@@ -52,7 +52,7 @@ namespace InkCanvas.Controllers
             }
             else
             {
-                // Follow the user
+                // follow the user
                 var follow = new Follow
                 {
                     UserId = userToFollow.Id,

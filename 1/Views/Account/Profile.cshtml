@@ -31,7 +31,7 @@
 </style>
 
 <h3>
-    Профіль @Model.Login
+    @Model.Login profile
     <span class="edit-icon" onclick="toggleEditForm()">u</span>
 </h3>
 
@@ -40,25 +40,25 @@
         <div class="form-group">
             <input type="text" class="form-control" id="newLogin" name="newLogin" value="@Model.Login" />
         </div>
-        <button type="submit" class="btn btn-primary">Оновити Логін</button>
+        <button type="submit" class="btn btn-primary">Update username</button>
     </form>
 </div>
 
 @Model.Email</p>
-<p><strong>Вік:</strong> @Model.Age</p>
+<p><strong>Age:</strong> @Model.Age</p>
 <div class="Buttons">
     <div class="row mb-2">
         <div class="col">
-            <a href="@Url.Action("Create", "Posts")" class="btn btn-primary btn-block">Новий пост</a>
+            <a href="@Url.Action("Create", "Posts")" class="btn btn-primary btn-block">New post</a>
         </div>
     </div>
 
     <div>
         <div class="col-md-6 mb-1">
-            <a class="btn btn-secondary" asp-controller="Likes" asp-action="UserLikes" asp-route-userId="@Model.Id">Вподобані</a>
+            <a class="btn btn-secondary" asp-controller="Likes" asp-action="UserLikes" asp-route-userId="@Model.Id">Liked posts</a>
         </div>
         <div class="col-md-6 mb-1">
-            <a class="btn btn-secondary" asp-controller="Follows" asp-action="UserFollowers" asp-route-userId="@Model.Id">Підписники</a>
+            <a class="btn btn-secondary" asp-controller="Follows" asp-action="UserFollowers" asp-route-userId="@Model.Id">Followers</a>
         </div>
     </div>
 </div>
@@ -88,7 +88,7 @@
 }
 else
 {
-    <h5>Поки що тут пусто.</h5>
+    <h5>It's quiet in here. Too quiet...</h5>
 }
 
 <script>

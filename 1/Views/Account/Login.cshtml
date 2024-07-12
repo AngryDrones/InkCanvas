@@ -5,8 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Вхід в InkCanvas</title>
-
+    <title>Welcome back!</title>
     <style>
         .fixed-width-form {
             width: 400px;
@@ -16,43 +15,38 @@
         .welcome-message {
             text-align: center;
         }
-
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #switchToRegister {
-            font-size: 14px;
-            padding: 8px 16px;
-        }
     </style>
-
 </head>
 <body>
-    <h2 class="welcome-message">Вхід в InkCanvas</h2>
-
     <form method="post" asp-controller="Account" asp-action="Login" class="fixed-width-form">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="Email" placeholder="name@example.com" asp-for="Email">
-            <label for="Email">Електронна адреса</label>
-            <span asp-validation-for="Email"></span>
-        </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="Password" placeholder="Пароль" autocomplete="off" asp-for="Password">
-            <label for="Password">Пароль</label>
-            <span asp-validation-for="Password"></span>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="RememberMe" asp-for="RememberMe">
-            <label class="form-check-label" for="RememberMe">Запам'ятати мене</label>
-        </div>
-        <div class="button-container">
-            <input type="submit" value="Увійти" class="btn btn-primary" />
-            <button type="button" onclick="window.location.href='Register'" class="btn btn-secondary">Вперше з нами? Зареєструватися</button>
-        </div>
+        <fieldset>
+            <legend>Login</legend>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3 row">
+                <label for="Login" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Login" placeholder="name@example.com" asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="Password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="Password" placeholder="One, one, one, uhh... ONE" autocomplete="off" asp-for="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="RememberMe" asp-for="RememberMe">
+                <label class="form-check-label" for="RememberMe">Remember me</label>
+            </div>
+            <div class="row">
+                <div class="col-sm-10 offset-sm-2">
+                    <input type="submit" value="Log in" class="btn btn-primary" />
+                    <button type="button" onclick="window.location.href='Register'" class="btn btn-secondary">First time here? Register!</button>
+                </div>
+            </div>
+        </fieldset>
     </form>
 </body>
 </html>

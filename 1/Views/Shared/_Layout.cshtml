@@ -34,10 +34,10 @@
                 <div>
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item dropdown" style="width: 120px">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Акаунт</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="@Url.Action("Profile", "Account")">Профіль</a>
-                                <a class="dropdown-item" href="@Url.Action("UserServices", "Services")">Імпорт/експорт</a>
+                                <a class="dropdown-item" href="@Url.Action("Profile", "Account")">Profile</a>
+                                <a class="dropdown-item" href="@Url.Action("UserServices", "Services")">Post import/export</a>
                             </div>
                         </li>
                     </ul>
@@ -47,11 +47,11 @@
                     {
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item dropdown" style="width: 120px">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Керування</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin panel</a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="@Url.Action("Index", "Roles")">Ролі</a>
-                                    <a class="dropdown-item" href="@Url.Action("Index", "Chart")">Статистика</a>
-                                    <a class="dropdown-item" href="@Url.Action("AdminServices", "Services")">Експорт</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Roles")">Roles</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Chart")">Statistics</a>
+                                    <a class="dropdown-item" href="@Url.Action("AdminServices", "Services")">Export</a>
                                 </div>
                             </li>
                         </ul>
@@ -61,8 +61,8 @@
                         @if (!(Context.Request.RouteValues["controller"].ToString() == "Account" && (Context.Request.RouteValues["action"].ToString() == "Register" || Context.Request.RouteValues["action"].ToString() == "Login")))
                         {
                             <form action="@Url.Action("SearchPost", "Posts")" class="d-flex me-2">
-                                <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Введіть букви">
-                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Пошук</button>
+                                <input class="form-control me-sm-2" name="searchString" type="search" placeholder="Let your cat type">
+                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                             </form>
                         }
 
@@ -70,7 +70,7 @@
                         {
                             <p class="m-0">@User.FindFirstValue("Login")</p>
                             <form class="m-0" method="post" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="btn btn-secondary">Вихід</button>
+                                <button type="submit" class="btn btn-secondary">Log out</button>
                             </form>
                         }
                         else
@@ -79,12 +79,12 @@
                             {
                                 <div>
                                     <form class="m-0" method="post" asp-controller="Account" asp-action="Login">
-                                        <button type="submit" class="btn btn-secondary">Вхід</button>
+                                        <button type="submit" class="btn btn-secondary">Log in</button>
                                     </form>
                                 </div>
                                 <div>
                                     <form class="m-0" method="post" asp-controller="Account" asp-action="Register">
-                                        <button type="submit" class="btn btn-secondary">Реєстація</button>
+                                        <button type="submit" class="btn btn-secondary">Register</button>
                                     </form>
                                 </div>
                             }

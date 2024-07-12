@@ -2,7 +2,7 @@
 
 namespace _1.ViewModel
 {
-    // For toggle "following" button label purposes
+    // For toggling the "following" button label
     public class UserProfileViewModel
     {
         public User User { get; set; }

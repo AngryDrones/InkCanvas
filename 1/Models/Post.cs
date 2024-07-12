@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InkCanvas.Models;
@@ -9,12 +10,12 @@ public partial class Post
 
     public string UserId { get; set; }
 
-    [DisplayName("Заголовок")]
+    [Required]
     public string Caption { get; set; }
 
-    [DisplayName("Опис")]
     public string Description { get; set; }
 
+    [Required]
     public string ImageUrl { get; set; }
 
     public DateTime Date { get; set; }
@@ -25,7 +26,7 @@ public partial class Post
 
     public virtual User User { get; set; }
 
-    [DisplayName("Зображення")]
+    [DisplayName("Image")]
     [NotMapped]
     public IFormFile ImageFile { get; set; }
 }

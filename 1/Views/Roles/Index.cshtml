@@ -1,12 +1,18 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
-<h2>Список ролей</h2>
+<h2>Role list</h2>
 
 <table class="table">
     @foreach (var role in Model)
     {
         <tr>
             <td>@role.Name</td>
+
+            @* TODO
+                Add a super admin that cannot lose 'admin' role.
+                Add moderators that can interact with user roles  with an exception of 'admin' role.
+            *@
+
 @*             <td>
                 <form asp-action="Delete" asp-route-id="@role.Id" method="post">
                     <button type="submit" class="btn btn-sm btn-danger">
@@ -19,8 +25,8 @@
 </table>
 
 <div>
-    <a asp-action="UserList" class="btn btn-primary">Список користувачів</a>
+    <a asp-action="UserList" class="btn btn-primary">User list</a>
     <form action="javascript:history.back()" class="m-0">
-        <button type="submit" class="btn btn-secondary">Назад</button>
+        <button type="submit" class="btn btn-secondary">Back</button>
     </form>
 </div>

@@ -1,17 +1,17 @@
-﻿<a href="@Url.Action("Export", "Services")" class="btn btn-primary">Експорт публікацій</a>
+﻿<a href="@Url.Action("Export", "Services")" class="btn btn-primary">Export posts</a>
 <form method="post" enctype="multipart/form-data" action="@Url.Action("Import", "Services")">
     <div class="form-group">
-        <label for="file">Select Excel File:</label>
+        <label for="file">Upload Excel File:</label>
         <input type="file" class="form-control-file" id="file" name="file">
     </div>
-    <button type="submit" class="btn btn-primary">Імпорт публікацій</button>
+    <button type="submit" class="btn btn-primary">Import posts</button>
 </form>
 
 @if (TempData["ErrorMessages"] is string[] errorMessages)
 {
     <div class="alert alert-dismissible alert-danger fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong>Упс! Щось пішло не так</strong>
+        <strong>Whoops! Something went wrong!</strong>
         @foreach (var errorMessage in errorMessages)
         {
             <p>@errorMessage</p>
@@ -20,5 +20,5 @@
 }
 
 <form action="javascript:history.back()" class="m-0">
-    <button type="submit" class="btn btn-secondary">Назад</button>
+    <button type="submit" class="btn btn-secondary">Back</button>
 </form>

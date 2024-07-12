@@ -13,32 +13,32 @@
             var userData = @Html.Raw(Json.Serialize(ViewBag.UserChartData));
             var userDataTable = google.visualization.arrayToDataTable(userData);
             var userOptions = {
-                title: 'Розподіл користувачів за віком',
+                title: 'User age distribution',
                 pieHole: 0.2,
             };
             var userChart = new google.visualization.PieChart(document.getElementById('chart1'));
             if (userData.length > 1) {
                 userChart.draw(userDataTable, userOptions);
             } else {
-                document.getElementById('chart1').innerHTML = "<p>Немає інформації для статистики віку користувачів.</p>";
+                document.getElementById('chart1').innerHTML = "<p>No info available</p>";
             }
 
             var likeData = @Html.Raw(Json.Serialize(ViewBag.LikeChartData));
             var likeDataTable = google.visualization.arrayToDataTable(likeData);
             var likeOptions = {
-                title: 'Розподіл вподобайок між 10 найбільш залайканими постами',
+                title: 'Like distribution between 10 most liked posts',
                 legend: { position: 'none' }
             };
             var likeChart = new google.visualization.ColumnChart(document.getElementById('chart2'));
             if (likeData.length > 1) {
                 likeChart.draw(likeDataTable, likeOptions);
             } else {
-                document.getElementById('chart2').innerHTML = "<p>Немає інформації для статистики вподобайок.</p>";
+                document.getElementById('chart2').innerHTML = "<p>No info available</p>";
             }
         }
     </script>
 }
 
 <form action="javascript:history.back()" class="m-0">
-    <button type="submit" class="btn btn-secondary">Назад</button>
+    <button type="submit" class="btn btn-secondary">Back</button>
 </form>

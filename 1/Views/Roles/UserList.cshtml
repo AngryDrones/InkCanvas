@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<InkCanvas.Models.User>
-<h2>Список користувачів</h2>
+
+<h2>User list</h2>
 <table class="table">
     @foreach (var user in Model)
     {
@@ -7,7 +8,7 @@
             <td>@user.Email</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">
-                    Права доступу
+                    Access rights
                 </a>
             </td>
         </tr>
@@ -15,5 +16,5 @@
 </table>
 
 <form action="javascript:history.back()" class="m-0">
-    <button type="submit" class="btn btn-secondary">Назад</button>
+    <button type="submit" class="btn btn-secondary">Back</button>
 </form>

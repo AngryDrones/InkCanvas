@@ -2,10 +2,10 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
-    ViewData["Title"] = "Вподобані";
+    ViewData["Title"] = "Favourites";
 }
 
-<h3>Вподобані</h3>
+<h3>Liked posts</h3>
 <hr />
 <div class="list-group">
     @if (Model.Any())
@@ -28,6 +28,6 @@
     }
     else
     {
-        <p>Тут пусто.</p>
+        <p>Why is it empty? Start liking now!.</p>
     }
 </div>

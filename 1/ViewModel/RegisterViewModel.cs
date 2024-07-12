@@ -15,7 +15,7 @@ namespace InkCanvas.ViewModel
         [Required]
         public int Age { get; set; }
         [Required]
-        [Compare("Password", ErrorMessage = "Паролі не співпадають")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
     }

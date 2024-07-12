@@ -42,7 +42,7 @@
         }
         else
         {
-            <span>Користувача не знайдено.</span>
+            <span>User not found.</span>
         }
     }
 </dd>
@@ -59,9 +59,8 @@
         @{
             var likeText = Model.Likes.Count switch
             {
-                1 => "вподобайка",
-                2 or 3 or 4 => "вподобайки",
-                _ => "вподобайок"
+                1 => "like",
+                _ => "likes"
             };
             <p>@Model.Likes.Count @likeText.</p>
         }
@@ -71,7 +70,7 @@
         <form asp-controller="Comments" asp-action="CreateComment" method="post">
             <input type="hidden" name="postId" value="@Model.PostId" />
             <textarea name="commentText" class="form-control" rows="3" required></textarea>
-            <button type="submit" class="btn btn-primary">Коментар</button>
+            <button type="submit" class="btn btn-primary">Comment</button>
         </form>
     }
 </div>
@@ -84,7 +83,7 @@
 </div>
 
 <form action="javascript:history.back()" class="m-0">
-    <button type="submit" class="btn btn-secondary">Назад</button>
+    <button type="submit" class="btn btn-secondary">Back</button>
 </form>
 
 <script>
@@ -107,15 +106,10 @@
                 let likeText;
                 switch (data.likeCount) {
                     case 1:
-                        likeText = "вподобайка";
-                        break;
-                    case 2:
-                    case 3:
-                    case 4:
-                        likeText = "вподобайки";
+                        likeText = "like";
                         break;
                     default:
-                        likeText = "вподобайок";
+                        likeText = "likes";
                         break;
                 }
                 likeCount.innerHTML = `<p>${data.likeCount} ${likeText}.</p>`;

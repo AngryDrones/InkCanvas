@@ -89,7 +89,7 @@ namespace InkCanvas.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильний логін чи (та) пароль");
+                    ModelState.AddModelError("", "Invalid credentials");
                 }
             }
             return View(model);

@@ -1,12 +1,12 @@
 ﻿@model User
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
-<h3>Профіль @Model.Login</h3>
+<h3>@Model.Login profile</h3>
 
 <p><strong>Email:</strong> @Model.Email</p>
-<p><strong>Вік:</strong> @Model.Age</p>
+<p><strong>Age:</strong> @Model.Age</p>
 
-<button type="button" class="btn btn-primary" onclick="toggleFollow('@Model.Id')">Стежити</button>
+<button type="button" class="btn btn-primary" onclick="toggleFollow('@Model.Id')">Follow</button>
 <hr />
 
 @if (Model.Posts.Any())
@@ -30,7 +30,7 @@
 }
 else
 {
-    <h5>Поки що тут пусто.</h5>
+    <h5>It's quiet in here. Too quiet...'</h5>
 }
 
 <script>
