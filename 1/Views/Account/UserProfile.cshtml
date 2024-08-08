@@ -6,7 +6,16 @@
 <p><strong>Email:</strong> @Model.Email</p>
 <p><strong>Age:</strong> @Model.Age</p>
 
-<button type="button" class="btn btn-primary" onclick="toggleFollow('@Model.Id')">Follow</button>
+@if (User.Identity.IsAuthenticated)
+{
+    var isFollowing = Model.FollowFollowers.Any(l => l.UserId == UserManager.GetUserId(User));
+    <button id="followButton" type="button" class="btn btn-primary" onclick="toggleFollow('@Model.Id')">
+        @(isFollowing ? "Unfollow" : "Follow")
+    </button>
+    
+}
+<p id="followCount">@Model.FollowFollowers.Count() followers</p>
+
 <hr />
 
 @if (Model.Posts.Any())
@@ -30,7 +39,7 @@
 }
 else
 {
-    <h5>It's quiet in here. Too quiet...'</h5>
+    <h5>It's quiet in here. Too quiet...</h5>
 }
 
 <script>
@@ -38,8 +47,19 @@ else
         $.post({
             url: "/Follows/ToggleFollow",
             data: { userId: userId },
-            success: function () {
-                location.reload();
+            success: function (data) {
+                const followButton = document.getElementById('followButton');
+                const followCountElement = document.getElementById('followCount');
+
+                // Toggling the follow button text
+                if (followButton.innerText === 'Follow') {
+                    followButton.innerText = 'Unfollow';
+                } else {
+                    followButton.innerText = 'Follow';
+                }
+
+                // Updating the follow count
+                followCountElement.innerText = `${data.followCount} followers`;
             },
             error: function (error) {
                 console.error(error);

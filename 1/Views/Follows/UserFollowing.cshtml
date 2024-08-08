@@ -1,0 +1,21 @@
+﻿@model IEnumerable<InkCanvas.Models.User>
+
+@{
+    ViewData["Title"] = "Following";
+}
+
+<h3>Following: @Model.Count()</h3>
+<hr />
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var following in Model)
+        {
+            <li>@following.Login</li>
+        }
+    </ul>
+}
+else
+{
+    <p>You are not following anyone... yet?</p>
+}

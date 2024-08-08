@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InkCanvas.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
@@ -34,7 +35,7 @@ namespace InkCanvas.Controllers
                 return NotFound();
             }
 
-            // check if the current user is already following the userToFollow
+            // Check if the current user is already following userToFollow
             var isFollowing = await _context.Follows
                 .AnyAsync(f => f.UserId == userToFollow.Id && f.FollowerId == currentUser.Id);
 
@@ -49,6 +50,8 @@ namespace InkCanvas.Controllers
                     _context.Follows.Remove(follow);
                     await _context.SaveChangesAsync();
                 }
+
+                Console.WriteLine("User unfollowed!");
             }
             else
             {
@@ -61,9 +64,36 @@ namespace InkCanvas.Controllers
 
                 _context.Follows.Add(follow);
                 await _context.SaveChangesAsync();
+
+                Console.WriteLine("User followed!");
             }
 
-            return Ok();
+            var followCount = await _context.Follows.CountAsync(f => f.UserId == userToFollow.Id);
+
+            return Ok(new { followCount });
+        }
+
+        // Display profiles that user if following
+        public async Task<IActionResult> UserFollowing()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userFollowing = await _context.Follows
+                .Where(f => f.FollowerId == userId)
+                .Select(f => f.User)
+                .ToListAsync();
+
+            return View(userFollowing);
         }
 
         public async Task<IActionResult> UserFollowers(string userId)

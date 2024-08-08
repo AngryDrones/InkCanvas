@@ -144,15 +144,22 @@ namespace InkCanvas.Controllers
                 return NotFound();
             }
 
+            // Check if the user is visiting their own profile
+            if (userId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return RedirectToAction("Profile");
+            }
+
             // Include posts.
             var userWithPosts = await _context.Users
                 .Include(u => u.Posts)
+                .Include(u => u.FollowFollowers) // include user's followers
                 .FirstOrDefaultAsync(u => u.Id == user.Id);
 
             return View(userWithPosts);
         }
 
-        // Action to handle the form submission for updating username
+        // Update username (login)
         [HttpPost]
         public async Task<IActionResult> Updatelogin(string newLogin)
         {
@@ -167,13 +174,8 @@ namespace InkCanvas.Controllers
                 currentUser.Login = newLogin;
                 var result = await _userManager.UpdateAsync(currentUser);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    // Optionally add logic to handle success, e.g., a success message
-                }
-                else
-                {
-                    // Optionally add logic to handle errors, e.g., displaying error messages
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
