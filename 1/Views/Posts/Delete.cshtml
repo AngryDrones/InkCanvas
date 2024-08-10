@@ -28,6 +28,8 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="PostId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+    </form>
+    <form action="javascript:history.back()" class="m-0">
+        <button type="submit" class="btn btn-secondary">Back</button>
     </form>
 </div>

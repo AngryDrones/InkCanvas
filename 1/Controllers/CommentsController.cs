@@ -164,29 +164,48 @@ namespace InkCanvas.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Comments/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var comment = await _context.Comments
-                .Include(c => c.Post)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.CommentId == id);
+        //    var comment = await _context.Comments
+        //        .Include(c => c.Post)
+        //        .Include(c => c.User)
+        //        .FirstOrDefaultAsync(m => m.CommentId == id);
+        //    if (comment == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(comment);
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
             {
-                return NotFound();
+                return Json(new { success = false });
             }
 
-            return View(comment);
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
         }
 
+
         // POST: Comments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
+        [ActionName("DeleteConfirmed")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var comment = await _context.Comments.FindAsync(id);

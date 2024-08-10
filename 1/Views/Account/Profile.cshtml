@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
-    ViewData["Title"] = $"{Model.Login} profile";
+    ViewData["Title"] = "Your profile";
 }
 
 <style>
@@ -36,7 +36,7 @@
 
 <h3>
     @Model.Login profile
-    <span class="edit-icon" onclick="toggleEditForm()">u</span>
+    <span class="edit-icon" onclick="toggleEditForm()">✎</span>
 </h3>
 
 <div id="editForm" class="edit-form">

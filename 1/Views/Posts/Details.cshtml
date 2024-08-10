@@ -1,4 +1,5 @@
-﻿@model InkCanvas.Models.Post
+﻿@using System.Security.Claims
+@model InkCanvas.Models.Post
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
 @{
@@ -44,6 +45,12 @@
         {
             <span>User not found.</span>
         }
+    }
+    @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+    {
+        <div class="col-md-6 mb-1">
+            <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@Model.PostId">Delete post</a>
+        </div>
     }
 </dd>
 

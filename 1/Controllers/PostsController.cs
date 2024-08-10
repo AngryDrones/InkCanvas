@@ -128,7 +128,7 @@ namespace InkCanvas.Controllers
                 _context.Add(post);
                 await _context.SaveChangesAsync();
 
-                return View("./Views/Account/Profile.cshtml");
+                return RedirectToAction("Profile", "Account");
             }
 
             return View(post);
@@ -233,7 +233,7 @@ namespace InkCanvas.Controllers
             _context.Posts.Remove(post);
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Profile", "Account");
         }
 
         private bool PostExists(int id)

@@ -15,9 +15,9 @@ namespace InkCanvas
             {
                 await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
             }
-            if (await roleManager.FindByNameAsync("Administrator") == null)
+            if (await roleManager.FindByNameAsync("Admin") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Administrator"));
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
             if (await roleManager.FindByNameAsync("User") == null)
             {
@@ -30,7 +30,7 @@ namespace InkCanvas
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "User");
-                    await userManager.AddToRoleAsync(admin, "Administrator");
+                    await userManager.AddToRoleAsync(admin, "Admin");
                     await userManager.AddToRoleAsync(admin, "SuperAdmin");
                 }
             }
