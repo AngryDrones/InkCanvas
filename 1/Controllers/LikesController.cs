@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "user,admin")]
+    [Authorize(Roles = "User")]
     public class LikesController : Controller
     {
         private readonly UserManager<User> _userManager;

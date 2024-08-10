@@ -53,7 +53,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Posts/Create
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
@@ -87,7 +87,7 @@ namespace InkCanvas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Create([Bind("Caption,Description")] Post post, IFormFile imageFile)
         {
             if (ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace InkCanvas.Controllers
 
 
         // GET: Posts/Edit/5
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -158,7 +158,7 @@ namespace InkCanvas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("PostId,UserId,Caption,Description")] Post post)
         {
             if (id != post.PostId)
@@ -191,7 +191,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Posts/Delete/5
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -211,7 +211,7 @@ namespace InkCanvas.Controllers
         }
 
         // POST: Posts/Delete/5
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -242,7 +242,7 @@ namespace InkCanvas.Controllers
         }
 
         // ALL posts view.
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> AllPosts()
         {
             var posts = await _context.Posts.ToListAsync();
@@ -276,7 +276,7 @@ namespace InkCanvas.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "user,admin")]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult Upload(IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)

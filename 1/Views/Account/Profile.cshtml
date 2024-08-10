@@ -1,6 +1,10 @@
 ﻿@model User
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
+@{
+    ViewData["Title"] = $"{Model.Login} profile";
+}
+
 <style>
     .Buttons {
         width: 200px;
@@ -44,7 +48,7 @@
     </form>
 </div>
 
-@Model.Email</p>
+<p>@Model.Email</p>
 <p><strong>Age:</strong> @Model.Age</p>
 <div class="Buttons">
     <div class="row mb-2">

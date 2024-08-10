@@ -1,6 +1,7 @@
 ﻿using InkCanvas.Models;
 using Microsoft.AspNetCore.Identity;
-namespace LibraryWebApplication
+
+namespace InkCanvas
 {
     public class RoleInitializer
     {
@@ -10,13 +11,17 @@ namespace LibraryWebApplication
             string adminEmail = "admin@gmail.com";
             string password = "Admin1_";
             string adminLogin = "Admin";
-            if (await roleManager.FindByNameAsync("admin") == null)
+            if (await roleManager.FindByNameAsync("SuperAdmin") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
             }
-            if (await roleManager.FindByNameAsync("user") == null)
+            if (await roleManager.FindByNameAsync("Administrator") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("user"));
+                await roleManager.CreateAsync(new IdentityRole("Administrator"));
+            }
+            if (await roleManager.FindByNameAsync("User") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("User"));
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
@@ -24,8 +29,9 @@ namespace LibraryWebApplication
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "user");
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, "User");
+                    await userManager.AddToRoleAsync(admin, "Administrator");
+                    await userManager.AddToRoleAsync(admin, "SuperAdmin");
                 }
             }
         }

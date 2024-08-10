@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LibraryWebApplication.Controllers
+namespace InkCanvas.Controllers
 {
-    [Authorize(Roles="admin")]
+    [Authorize(Roles="Admin,SuperAdmin")]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;

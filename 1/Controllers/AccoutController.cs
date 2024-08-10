@@ -36,11 +36,12 @@ namespace InkCanvas.Controllers
                     Email = model.Email,
                     Age = model.Age
                 };
+
                 // Adding the user.
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "user");
+                    await _userManager.AddToRoleAsync(user, "User");
                     // Cookies.
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");

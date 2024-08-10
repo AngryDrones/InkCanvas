@@ -15,7 +15,7 @@ public partial class Post
 
     public string Description { get; set; }
 
-    [Required]
+    //[Required]
     public string ImageUrl { get; set; }
 
     public DateTime Date { get; set; }

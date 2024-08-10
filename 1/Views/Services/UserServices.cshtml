@@ -1,4 +1,8 @@
-﻿<a href="@Url.Action("Export", "Services")" class="btn btn-primary">Export posts</a>
+﻿@{
+    ViewData["Title"] = "User services";
+}
+
+<a href="@Url.Action("Export", "Services")" class="btn btn-primary">Export posts</a>
 <form method="post" enctype="multipart/form-data" action="@Url.Action("Import", "Services")">
     <div class="form-group">
         <label for="file">Upload Excel File:</label>

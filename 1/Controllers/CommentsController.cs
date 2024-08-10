@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "user,admin")]
+    [Authorize(Roles = "User,Admin")]
     public class CommentsController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -54,7 +54,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Comments
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var cloneIdentityContext = _context.Comments.Include(c => c.Post).Include(c => c.User);

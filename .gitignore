@@ -3,11 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-*.vsidx
-*.v2
-*.suo
-*.json
-*.bin
+##*.vsidx
+##*.v2
+##*.suo
+##*.json
+##*.bin
 
 # User-specific files
 *.rsuser

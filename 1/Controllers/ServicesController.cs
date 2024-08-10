@@ -10,9 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace _1.Controllers
+namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "user,admin")]
+    [Authorize(Roles = "User")]
     public class ServicesController : Controller
     {
         private readonly CloneIdentityContext _context;
@@ -173,7 +173,7 @@ namespace _1.Controllers
         }
 
         // All posts export
-        [Authorize(Roles="admin")]
+        [Authorize(Roles="Admin")]
         public IActionResult ExportAll()
         {
             var exportPosts = _context.Posts.ToList();

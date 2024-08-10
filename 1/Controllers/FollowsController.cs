@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace InkCanvas.Controllers
 {
-    [Authorize(Roles = "user,admin")]
+    [Authorize(Roles = "User")]
     public class FollowsController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -114,7 +114,7 @@ namespace InkCanvas.Controllers
         }
 
         // GET: Follows
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var cloneIdentityContext = _context.Follows.Include(f => f.Follower).Include(f => f.User);

@@ -1,6 +1,10 @@
 ﻿@model User
 @inject Microsoft.AspNetCore.Identity.UserManager<InkCanvas.Models.User> UserManager
 
+@{
+    ViewData["Title"] = $"{Model.Login} profile";
+}
+
 <h3>@Model.Login profile</h3>
 
 <p><strong>Email:</strong> @Model.Email</p>
