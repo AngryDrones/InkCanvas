@@ -4,6 +4,7 @@ using InkCanvas.ViewModel;
 using InkCanvas.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 namespace InkCanvas.Controllers
 {
     public class AccountController : Controller
@@ -19,11 +20,13 @@ namespace InkCanvas.Controllers
             _signInManager = signInManager;
             _context = context;
         }
-        [HttpGet]
+
+        //[HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -58,9 +61,10 @@ namespace InkCanvas.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(/*string returnUrl = null*/)
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            ModelState.Clear();
+            return View(/*new LoginViewModel { ReturnUrl = returnUrl }*/);
         }
         //[HttpGet]
         //public IActionResult Login(string? returnUrl = null)

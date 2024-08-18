@@ -13,6 +13,7 @@ namespace InkCanvas.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
+        [Range(16, 100, ErrorMessage = "Yeah, I don't think so")]
         public int Age { get; set; }
         [Required]
         [Compare("Password", ErrorMessage = "Passwords do not match")]

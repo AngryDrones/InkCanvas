@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 namespace InkCanvas.Models;
 public partial class User : IdentityUser
 {
