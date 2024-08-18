@@ -7,12 +7,8 @@
       "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\viewmodel\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\controllers\\accoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\controllers\\accoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\viewmodel\\customvalidaitonattributes\\agerangeattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\viewmodel\\customvalidaitonattributes\\agerangeattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -21,6 +17,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\viewmodel\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\viewmodel\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|c:\\projects\\2\\1\\controllers\\accoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4647B944-EAD6-4AA8-8603-98EB5A0F53ED}|1\\InkCanvas.csproj|solutionrelative:1\\controllers\\accoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,20 +58,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AgeRangeAttribute.cs",
+              "DocumentMoniker": "C:\\Projects\\2\\1\\ViewModel\\CustomValidaitonAttributes\\AgeRangeAttribute.cs",
+              "RelativeDocumentMoniker": "1\\ViewModel\\CustomValidaitonAttributes\\AgeRangeAttribute.cs",
+              "ToolTip": "C:\\Projects\\2\\1\\ViewModel\\CustomValidaitonAttributes\\AgeRangeAttribute.cs",
+              "RelativeToolTip": "1\\ViewModel\\CustomValidaitonAttributes\\AgeRangeAttribute.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T14:08:51.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "C:\\Projects\\2\\1\\ViewModel\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "1\\ViewModel\\RegisterViewModel.cs",
               "ToolTip": "C:\\Projects\\2\\1\\ViewModel\\RegisterViewModel.cs",
               "RelativeToolTip": "1\\ViewModel\\RegisterViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAkAAAA",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAzwBIAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-18T14:04:23.715Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Projects\\2\\1\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "1\\Views\\Shared\\_Layout.cshtml",
@@ -80,7 +97,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "AccoutController.cs",
               "DocumentMoniker": "C:\\Projects\\2\\1\\Controllers\\AccoutController.cs",
               "RelativeDocumentMoniker": "1\\Controllers\\AccoutController.cs",
@@ -93,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Projects\\2\\1\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "1\\Views\\Account\\Login.cshtml",
@@ -106,13 +123,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "C:\\Projects\\2\\1\\ViewModel\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "1\\ViewModel\\LoginViewModel.cs",
               "ToolTip": "C:\\Projects\\2\\1\\ViewModel\\LoginViewModel.cs",
               "RelativeToolTip": "1\\ViewModel\\LoginViewModel.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABAAAAAHAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-18T13:52:49.136Z",
               "EditorCaption": ""
